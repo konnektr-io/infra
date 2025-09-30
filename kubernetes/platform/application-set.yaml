@@ -1,0 +1,9 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: konnektr-platform-apps
+spec:
+  generators:
+    # Add generators for platform apps here
+  template:
+    # Add template for platform apps here
