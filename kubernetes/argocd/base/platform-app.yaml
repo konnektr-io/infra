@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: platform
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  destinations:
+    - name: "*"
+      namespace: "*"
+      server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  sourceRepos:
+    - https://charts.jetstack.io
+    - https://charts.external-secrets.io
+    - https://gateway.envoyproxy.io/helm-charts
+    - https://open-telemetry.github.io/opentelemetry-helm-charts
+    - https://fluent.github.io/helm-charts
+    - https://kedacore.github.io/charts
+    - https://grafana.github.io/helm-charts
+    - https://dapr.github.io/helm-charts
+    - https://charts.konnektr.io
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform
+  namespace: argocd
+  annotations:
+    localSource: "true"
+    argocd.argoproj.io/manifest-generate-paths: ../../
+spec:
+  destination:
+    namespace: platform
+    server: https://kubernetes.default.svc
+  project: platform
+  source:
+    path: kubernetes/platform/overlays/prd
+    repoURL: https://github.com/konnektr-io/infra.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

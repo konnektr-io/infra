@@ -1,0 +1,15 @@
+# OIDC config for ArgoCD SSO (edit values for Auth0 or Google Cloud Identity)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  url: https://argocd.YOUR_DOMAIN
+  oidc.config: |
+    name: Auth0
+    issuer: https://YOUR_AUTH0_DOMAIN/
+    clientID: YOUR_CLIENT_ID
+    clientSecret: $oidc.auth0.clientSecret
+    requestedScopes: [openid, profile, email, groups]
+    # For Google Cloud Identity, set issuer to https://accounts.google.com and use Google client credentials

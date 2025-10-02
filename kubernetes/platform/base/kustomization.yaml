@@ -1,2 +1,3 @@
 resources:
-  # Add platform manifests here
+  - envoy-gateway-app.yaml
+  - envoy-gateway.yaml
