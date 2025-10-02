@@ -9,10 +9,4 @@ provider "google" {
   region  = var.region
 }
 
-module "network" {
-  source = "./network.tf"
-}
-
-module "gke" {
-  source = "./gke.tf"
-}
+// All resources are loaded from .tf files in this directory
