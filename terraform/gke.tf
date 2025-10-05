@@ -16,6 +16,7 @@ resource "google_project_iam_member" "gke_nodes_storage_object_viewer" {
   role    = "roles/storage.objectViewer"
   member  = "serviceAccount:${google_service_account.gke_nodes.email}"
 }
+
 // GKE cluster resources (cost-optimized, spot/preemptible only)
 resource "google_container_cluster" "primary" {
   name     = var.gke_name
@@ -23,8 +24,16 @@ resource "google_container_cluster" "primary" {
   network  = var.network_name
   subnetwork = var.subnet_name
 
-  remove_default_node_pool = true
-  initial_node_count = 1
+  enable_autopilot = true
+
+  datapath_provider = "ADVANCED_DATAPATH" # Enables Dataplane V2 (Cilium)
+
+  # Use custom node pool service account for Autopilot
+  cluster_autoscaling {
+    auto_provisioning_defaults  {
+      service_account = google_service_account.gke_nodes.email
+    }
+  }
 
   # Disable expensive features
   logging_service    = "none"
@@ -40,38 +49,3 @@ resource "google_container_cluster" "primary" {
   }
   ip_allocation_policy {}
 }
-
-resource "google_container_node_pool" "spot_pool" {
-  name       = "spot-pool"
-  cluster    = google_container_cluster.primary.name
-  location   = var.region
-
-
-  autoscaling {
-    min_node_count = var.min_node_count
-    max_node_count = var.max_node_count
-  }
-
-  node_config {
-    preemptible    = true
-    spot           = true
-    machine_type   = var.node_machine_type
-    service_account = google_service_account.gke_nodes.email
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
-    labels = {
-      "cloud.google.com/gke-spot" = "true"
-    }
-    metadata = {
-      disable-legacy-endpoints = "true"
-    }
-    tags = ["gke-node", "spot"]
-  }
-
-  management {
-    auto_repair  = false
-    auto_upgrade = true
-  }
-}
-
