@@ -1,0 +1,65 @@
+apiVersion: konnektr.io/v1alpha1
+kind: DatabaseQueryResource
+metadata:
+  name: konnektr-project-namespace
+  namespace: ktrlplane
+  finalizers:
+    - konnektr.io/databasequeryresource-finalizer
+spec:
+  # How often to query the database and reconcile
+  pollInterval: "5m"
+  # Whether to delete resources if their corresponding DB row disappears (default: true)
+  prune: true
+  database:
+    type: postgres
+    connectionSecretRef:
+      # Name of the Secret created earlier
+      name: ktrlplane-db-secret
+      # Optional: Namespace of the Secret (defaults to this CR's namespace)
+      # namespace: database-secrets
+      # Optional: Override default keys in the Secret
+      hostKey: DB_HOST
+      portKey: DB_PORT
+      userKey: DB_USER
+      passwordKey: DB_PASSWORD
+      dbNameKey: DB_NAME
+      # sslModeKey: DB_SSLMODE
+  # The SQL query to execute
+  query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE project_id = $1;"
+  # Go template for the Kubernetes resource(s)
+  template: |
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: ktrlplane
+      namespace: ktrlplane
+    spec:
+      chart: agedigitaltwins
+      repo: https://charts.konnektr.io
+      version: "0.28.6"
+      targetNamespace: {{ .Row.project_id | lower }}
+      valuesContent: |-
+        fullnameOverride: digitaltwins-admin
+        cluster:
+          imageName: "apache/age:dev_snapshot_PG17"
+          instances: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 50m
+              memory: 1000Mi
+        api:
+          enabled: true
+          imageName: "ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.17.0-preview.2"
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: "1"
+            requests:
+              memory: 250Mi
+              cpu: 50m
+        events:
+          enabled: false
+          imageName: "ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.17.0-preview.2"

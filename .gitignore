@@ -1,0 +1,6 @@
+.env
+*passwd*
+*password*
+*credentials*
+*secret.*
+*apikey*

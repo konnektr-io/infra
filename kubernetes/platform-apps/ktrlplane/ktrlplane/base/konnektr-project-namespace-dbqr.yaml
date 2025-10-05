@@ -1,0 +1,34 @@
+apiVersion: konnektr.io/v1alpha1
+kind: DatabaseQueryResource
+metadata:
+  name: konnektr-project-namespace
+  namespace: ktrlplane
+  finalizers:
+    - konnektr.io/databasequeryresource-finalizer
+spec:
+  # How often to query the database and reconcile
+  pollInterval: "5m"
+  # Whether to delete resources if their corresponding DB row disappears (default: true)
+  prune: true
+  database:
+    type: postgres
+    connectionSecretRef:
+      # Name of the Secret created earlier
+      name: ktrlplane-db-secret
+      # Optional: Namespace of the Secret (defaults to this CR's namespace)
+      # namespace: database-secrets
+      # Optional: Override default keys in the Secret
+      hostKey: DB_HOST
+      portKey: DB_PORT
+      userKey: DB_USER
+      passwordKey: DB_PASSWORD
+      dbNameKey: DB_NAME
+      # sslModeKey: DB_SSLMODE
+  # The SQL query to execute
+  query: "SELECT project_id, org_id FROM ktrlplane.projects;"
+  # Go template for the Kubernetes resource(s)
+  template: |
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: {{ .Row.project_id | lower }}

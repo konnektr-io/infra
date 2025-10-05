@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-dns
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-dns
+  namespace: external-dns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: external-dns
+rules:
+  - apiGroups: [""]
+    resources: ["services", "endpoints", "pods", "namespaces"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["discovery.k8s.io"]
+    resources: ["endpointslices"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["extensions", "networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["list", "watch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-dns-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+  - kind: ServiceAccount
+    name: external-dns
+    namespace: external-dns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: registry.k8s.io/external-dns/external-dns:v0.19.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - --source=gateway-httproute
+            - --source=gateway-tlsroute
+            - --source=gateway-tcproute
+            - --source=gateway-udproute
+            - --log-level=debug
+            - --domain-filter=konnektr.io
+            - --provider=webhook
+            - --txt-owner-id=konnektr-gke
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+        - name: external-dns-webhook-provider
+          image: ghcr.io/konnektr-io/external-dns-porkbun-webhook:v0.2.19
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: GO_LOG
+              value: debug
+            - name: DOMAIN_FILTER
+              value: konnektr.io
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: porkbun-secret
+                  key: APIKEY
+            - name: API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: porkbun-secret
+                  key: SECRETAPIKEY
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-external-ip
+  namespace: external-dns
+spec:
+  schedule: "*/30 * * * *" # Runs every 30 minutes
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: update-external-ip
+              image: quay.io/appuio/oc:v4.17
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  EXTERNAL_IP=$(curl -s https://api.ipify.org) && \
+                  if [ -z "$EXTERNAL_IP" ]; then
+                    echo "Failed to retrieve external IP" && exit 1;
+                  fi && \
+                  echo "Retrieved external IP: $EXTERNAL_IP" && \
+                  for namespace in $(kubectl get namespaces -o jsonpath='{.items[*].metadata.name}'); do
+                    for ingress in $(kubectl get ingress -n "$namespace" -o jsonpath='{.items[*].metadata.name}'); do
+                      HOSTNAME=$(kubectl get ingress "$ingress" -n "$namespace" -o jsonpath='{.metadata.annotations.external-dns\.alpha\.kubernetes\.io/hostname}')
+                      if [[ -z "$HOSTNAME" || "$HOSTNAME" != *"local"* ]]; then
+                        kubectl patch ingress "$ingress" -n "$namespace" -p "{\"metadata\": {\"annotations\": {\"external-dns.alpha.kubernetes.io/target\": \"$EXTERNAL_IP\"}}}" || exit 1;
+                      fi
+                    done
+                  done
+              env:
+                - name: KUBECONFIG
+                  value: /root/.kube/config
+          restartPolicy: OnFailure
+          serviceAccountName: external-dns

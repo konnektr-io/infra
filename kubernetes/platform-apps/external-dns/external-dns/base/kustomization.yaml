@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.26.1/cnpg-1.26.1.yaml
+  - https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.4.0/manifest.yaml
+
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: not-used
+      $patch: delete
+    target:
+      name: cnpg-system
+      kind: Namespace
+  - patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-options
+        value: ServerSideApply=true
+    target:
+      name: ".*.cnpg.io"
+      kind: CustomResourceDefinition
+
+  # This patch adds annotations to the metadata of the cnpg-controller-manager Deployment.
+  # The annotations are used by Prometheus for scraping metrics.
+  - patch: |-
+      - op: add
+        path: /spec/template/metadata/annotations
+        value:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "8080"
+    target:
+      name: cnpg-controller-manager
+      kind: Deployment
+
+configMapGenerator:
+  - name: cnpg-controller-manager-config
+    options:
+      disableNameSuffixHash: true
+    behavior: create
+    literals:
+      - ENABLE_INSTANCE_MANAGER_INPLACE_UPDATES='true'

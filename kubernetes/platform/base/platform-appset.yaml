@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/konnektr-io/infra.git
+        revision: main
+        directories:
+          - path: kubernetes/platform-apps/*/*/overlays/prd
+          - path: kubernetes/platform-apps/*/_*/overlays/prd
+            exclude: true
+  template:
+    metadata:
+      name: "{{index .path.segments 3}}"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: ../../
+    spec:
+      project: "platform"
+      source:
+        repoURL: https://github.com/konnektr-io/infra.git
+        targetRevision: main
+        path: "{{.path.path}}"
+
+        kustomize:
+          commonLabels:
+            k8s.konnektr.io/argo-app: "{{index .path.segments 3}}"
+          labelWithoutSelector: true
+          labelIncludeTemplates: false # default
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{index .path.segments 2}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
