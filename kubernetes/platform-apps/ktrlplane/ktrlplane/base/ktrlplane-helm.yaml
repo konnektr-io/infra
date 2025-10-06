@@ -11,8 +11,6 @@ spec:
   valuesContent: |-
     database:
       enabled: true
-      useExternalSecret: true
-      externalSecretName: "ktrlplane-db-secret"
 
     ingress:
       enabled: true
@@ -30,7 +28,7 @@ spec:
     stripe:
       enabled: true
       useExternalSecret: true
-      externalSecretName: "ktrlplane-stripe-secret"
+      externalSecretName: "stripe-secret"
       # Product configuration (safe to store in values)
       products:
         - resource_type: "Konnektr.Graph"

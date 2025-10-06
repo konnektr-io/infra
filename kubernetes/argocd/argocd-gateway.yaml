@@ -11,7 +11,7 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: argo.konnektr.io
+      hostname: argocd.konnektr.io
       tls:
         mode: Terminate
         certificateRefs:

@@ -5,11 +5,18 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  url: https://argocd.YOUR_DOMAIN
+  url: https://argocd.konnektr.io
+  timeout.reconciliation: 1h # Reduce frequency of repo polling
+  timeout.reconciliation.jitter: 5m # Add some jitter to avoid thundering herd
   oidc.config: |
     name: Auth0
-    issuer: https://YOUR_AUTH0_DOMAIN/
-    clientID: YOUR_CLIENT_ID
+    issuer: https://auth.konnektr.io/ 
+    clientID: 90TsN4J1Y1KQ1NWgy8PJjKp3mx7lH6Ig  
     clientSecret: $oidc.auth0.clientSecret
     requestedScopes: [openid, profile, email, groups]
-    # For Google Cloud Identity, set issuer to https://accounts.google.com and use Google client credentials
+    requestedIDTokenClaims:
+      groups:
+        essential: true
+    # Optional: Configure group claims from Auth0
+    # claimsMapping:
+    #   groups: https://argocd.io/groups

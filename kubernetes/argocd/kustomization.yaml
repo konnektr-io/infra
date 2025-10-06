@@ -2,6 +2,8 @@ resources:
   - namespace
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.8/manifests/install.yaml
   - argocd-cm.yaml
+  - argocd-secret.yaml
+  - auth0-external-secret.yaml
   - platform-app.yaml
   - argocd-gateway.yaml
   - argocd-server-httproute.yaml

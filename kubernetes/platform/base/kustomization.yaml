@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - appset.yaml
+  - argocd-app.yaml
+  - cert-issuers.yaml
+  - cert-manager-app.yaml
+  - envoy-gateway-app.yaml
+  - external-secrets-app.yaml
+  - external-secrets-cluster-store-app.yaml
+  - platform-appset.yaml
