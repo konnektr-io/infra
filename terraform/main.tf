@@ -1,7 +1,6 @@
 // Entry point for Terraform configuration
 terraform {
-  required_version = ">= 1.3.0"
-  backend "gcs" {}
+  required_version = ">= 1.13.0"
 }
 
 provider "google" {

@@ -19,9 +19,9 @@ resource "google_project_iam_member" "gke_nodes_storage_object_viewer" {
 
 // GKE cluster resources (cost-optimized, spot/preemptible only)
 resource "google_container_cluster" "primary" {
-  name     = var.gke_name
-  location = var.region
-  network  = var.network_name
+  name       = var.gke_name
+  location   = var.region
+  network    = var.network_name
   subnetwork = var.subnet_name
 
   enable_autopilot = true
@@ -30,17 +30,15 @@ resource "google_container_cluster" "primary" {
 
   # Use custom node pool service account for Autopilot
   cluster_autoscaling {
-    auto_provisioning_defaults  {
+    auto_provisioning_defaults {
       service_account = google_service_account.gke_nodes.email
     }
   }
 
   # Disable expensive features
-  logging_service    = "none"
-  monitoring_service = "none"
-  enable_intranode_visibility = false
-  enable_shielded_nodes = false
-  enable_tpu = false
+  logging_service             = "none"
+  monitoring_service          = "none"
+  enable_tpu                  = false
   # Enable private cluster for security/cost
   private_cluster_config {
     enable_private_nodes    = true

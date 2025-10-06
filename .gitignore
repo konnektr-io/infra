@@ -4,3 +4,6 @@
 *credentials*
 *secret.*
 *apikey*
+.terraform
+.terraform.*
+terraform.tfstate
