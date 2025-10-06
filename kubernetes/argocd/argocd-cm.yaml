@@ -17,6 +17,15 @@ data:
     requestedIDTokenClaims:
       groups:
         essential: true
-    # Optional: Configure group claims from Auth0
-    # claimsMapping:
-    #   groups: https://argocd.io/groups
+    claimsMapping:
+      groups: https://konnektr.io/groups
+  policy.default: role:none
+  policy.csv: |
+    p, role:admin, applications, *, */*, allow
+    p, role:admin, clusters, *, *, allow
+    p, role:admin, repositories, *, *, allow
+    p, role:developer, applications, get, */*, allow
+    p, role:developer, applications, sync, */*, allow
+    p, role:developer, repositories, get, *, allow
+    g, konnektr-admins, role:admin
+    g, konnektr-developers, role:developer
