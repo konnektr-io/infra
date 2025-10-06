@@ -6,8 +6,10 @@ metadata:
   namespace: argocd
 data:
   url: https://argocd.konnektr.io
-  timeout.reconciliation: 1h # Reduce frequency of repo polling
-  timeout.reconciliation.jitter: 5m # Add some jitter to avoid thundering herd
+  timeout.reconciliation: 24h # Polling frequency (reduced since webhooks handle most updates)
+  timeout.reconciliation.jitter: 1h # Add some jitter to avoid thundering herd
+  # Webhook configuration
+  webhook.github.secret: $webhook.github.secret
   oidc.config: |
     name: Auth0
     issuer: https://auth.konnektr.io/ 

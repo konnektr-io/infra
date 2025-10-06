@@ -10,6 +10,15 @@ spec:
   hostnames:
     - argocd.konnektr.io
   rules:
+    # Webhook endpoint - must come first for proper routing
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/webhook
+      backendRefs:
+        - name: argocd-server
+          port: 80  # Webhook server uses HTTP (internal cluster traffic)
+    # Main ArgoCD UI - catch-all
     - matches:
         - path:
             type: PathPrefix

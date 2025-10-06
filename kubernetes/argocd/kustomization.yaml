@@ -4,6 +4,7 @@ resources:
   - argocd-cm.yaml
   - argocd-secret.yaml
   - auth0-external-secret.yaml
+  - github-webhook-external-secret.yaml
   - platform-app.yaml
   - argocd-gateway.yaml
   - argocd-server-httproute.yaml
