@@ -12,16 +12,16 @@ spec:
     provider:
       issuer: "https://auth.konnektr.io/"
     # Use the same client ID as ArgoCD
-    clientID: "90TsN4J1Y1KQ1NWgy8PJjKp3mx7lH6Ig"  
+    clientID: "90TsN4J1Y1KQ1NWgy8PJjKp3mx7lH6Ig"
     clientSecret:
       # Reference the same secret used by ArgoCD
       name: "argocd-secret"
       namespace: "argocd"
     # Global callback URL - all services redirect here
     redirectURL: "https://oauth.konnektr.io/oauth2/callback"
-    logoutPath: "/logout" 
+    logoutPath: "/logout"
     scopes:
       - "openid"
-      - "profile" 
+      - "profile"
       - "email"
-      - "groups"  # Same as ArgoCD to get group claims
+      - "groups" # Same as ArgoCD to get group claims
