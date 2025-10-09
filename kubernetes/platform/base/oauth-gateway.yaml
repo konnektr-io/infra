@@ -1,0 +1,128 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: oauth-gateway
+  namespace: envoy-gateway-system
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+spec:
+  gatewayClassName: eg
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: oauth.konnektr.io
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: oauth-tls
+---
+# Simple status service to handle any non-OAuth requests to oauth.konnektr.io
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth-status-service
+  namespace: envoy-gateway-system
+spec:
+  selector:
+    app: oauth-status
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth-status
+  namespace: envoy-gateway-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth-status
+  template:
+    metadata:
+      labels:
+        app: oauth-status
+    spec:
+      containers:
+        - name: oauth-status
+          image: nginx:alpine
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: html
+              mountPath: /usr/share/nginx/html
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
+      volumes:
+        - name: html
+          configMap:
+            name: oauth-status-html
+        - name: nginx-config
+          configMap:
+            name: oauth-status-nginx
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oauth-status-html
+  namespace: envoy-gateway-system
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Konnektr Auth Service</title>
+    </head>
+    <body>
+        <h1>Konnektr Authentication Service</h1>
+        <p>This endpoint handles OAuth2 authentication for Konnektr services.</p>
+    </body>
+    </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oauth-status-nginx
+  namespace: envoy-gateway-system
+data:
+  default.conf: |
+    server {
+        listen 8080;
+        server_name localhost;
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+    }
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: oauth-callback
+  namespace: envoy-gateway-system
+spec:
+  parentRefs:
+    - name: oauth-gateway
+      namespace: envoy-gateway-system
+  hostnames:
+    - oauth.konnektr.io
+  rules:
+    # Default route for any requests (OAuth2 paths are handled by SecurityPolicy)
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: oauth-status-service
+          port: 80

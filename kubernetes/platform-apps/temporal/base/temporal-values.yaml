@@ -1,0 +1,93 @@
+server:
+  replicaCount: 1
+  # Global security context for all server components
+  containerSecurityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+  # Individual service configurations
+  frontend:
+    containerSecurityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+  history:
+    containerSecurityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+  matching:
+    containerSecurityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+  worker:
+    containerSecurityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+
+  config:
+    namespaces:
+      create: true
+      namespace:
+        - name: digitaltwins
+          retention: 3d
+    persistence:
+      defaultStore: default
+      # PostgreSQL configuration using CNPG-generated secret
+      default:
+        driver: "sql"
+        sql:
+          driver: "postgres12_pgx"
+          host: "temporal-postgresql-rw"
+          port: 5432
+          database: "app" # CNPG default database for persistence
+          user: "app" # CNPG default user
+          existingSecret: "temporal-postgresql-app" # CNPG-generated secret
+          maxConns: 20
+          maxIdleConns: 20
+          maxConnLifetime: "1h"
+      visibility:
+        driver: "sql"
+        sql:
+          driver: "postgres12_pgx"
+          host: "temporal-postgresql-rw"
+          port: 5432
+          database: "temporal_visibility" # Separate database for visibility
+          user: "app" # Same user as persistence
+          existingSecret: "temporal-postgresql-app" # Same secret as persistence
+          maxConns: 10
+          maxIdleConns: 10
+          maxConnLifetime: "1h"
+
+# Disable Cassandra
+cassandra:
+  enabled: false
+
+# Disable Elasticsearch
+elasticsearch:
+  enabled: false
+
+# Disable built-in databases (using external CNPG PostgreSQL)
+mysql:
+  enabled: false
+
+postgresql:
+  enabled: false
+
+# Disable monitoring for now
+prometheus:
+  enabled: false
+
+grafana:
+  enabled: false
+
+# Enable Web UI
+web:
+  enabled: true
+
+# Schema initialization configuration
+# createDatabase disabled since databases are created by CNPG postInitSQL
+schema:
+  createDatabase:
+    enabled: false # Databases already created by CNPG
+  setup:
+    enabled: true # Still need to setup schema tables
+  update:
+    enabled: true # Still need to update schema versions

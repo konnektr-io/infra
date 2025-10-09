@@ -1,0 +1,27 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: global-auth0-oidc
+  namespace: envoy-gateway-system
+spec:
+  # Use label selector instead of targetRefs to apply to multiple gateways
+  targetSelector:
+    matchLabels:
+      auth.konnektr.io/enabled: "true"
+  oidc:
+    provider:
+      issuer: "https://auth.konnektr.io/"
+    # Use the same client ID as ArgoCD
+    clientID: "90TsN4J1Y1KQ1NWgy8PJjKp3mx7lH6Ig"  
+    clientSecret:
+      # Reference the same secret used by ArgoCD
+      name: "argocd-secret"
+      namespace: "argocd"
+    # Global callback URL - all services redirect here
+    redirectURL: "https://oauth.konnektr.io/oauth2/callback"
+    logoutPath: "/logout" 
+    scopes:
+      - "openid"
+      - "profile" 
+      - "email"
+      - "groups"  # Same as ArgoCD to get group claims

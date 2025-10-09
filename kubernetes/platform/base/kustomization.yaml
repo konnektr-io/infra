@@ -10,3 +10,5 @@ resources:
   - external-secrets-app.yaml
   - external-secrets-cluster-store-app.yaml
   - platform-appset.yaml
+  - oauth-gateway.yaml
+  - global-auth0-security-policy.yaml

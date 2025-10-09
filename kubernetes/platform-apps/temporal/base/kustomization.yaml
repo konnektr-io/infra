@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - postgresql-cluster.yaml
+  - temporal-gateway.yaml
+  - temporal-httproute.yaml
+
+helmCharts:
+  - name: temporal
+    releaseName: temporal
+    valuesFile: temporal-values.yaml
+    repo: https://go.temporal.io/helm-charts
+    version: 0.68.x
+    namespace: temporal
+
+buildMetadata: [managedByLabel, originAnnotations]
