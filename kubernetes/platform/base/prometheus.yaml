@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: prometheus
+    targetRevision: 25.17.0
+    helm:
+      valuesObject:
+        server:
+          remoteWrite:
+            - url: http://mimir-distributor.mimir.svc.cluster.local:8080/api/v1/push
+              headers:
+                # Sets the default tenant ID for metrics pushed to Mimir
+                X-Scope-OrgID: "default-tenant"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

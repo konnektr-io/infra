@@ -12,3 +12,7 @@ resources:
   - platform-appset.yaml
   - oauth-gateway.yaml
   - global-auth0-security-policy.yaml
+  - loki.yaml
+  - mimir.yaml
+  - prometheus.yaml
+  - opentelemetry-collector.yaml

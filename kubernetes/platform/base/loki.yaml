@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: loki-distributed
+    targetRevision: 0.77.2
+    helm:
+      valuesObject:
+        loki:
+          auth_enabled: true
+          tenant_mode: org-id
+          storage:
+            type: gcs
+            gcs:
+              bucketName: "konnektr-loki-data" # <-- YOUR GCS BUCKET NAME
+              # Mount the GCS service account key from the secret
+              serviceAccount:
+                secretKeyRef:
+                  name: gcs-credentials
+                  key: gcs.json
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: loki
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

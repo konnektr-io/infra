@@ -1,0 +1,96 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opentelemetry-collector
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+    chart: opentelemetry-collector
+    targetRevision: 0.81.0
+    helm:
+      valuesObject:
+        mode: daemonset
+        config:
+          receivers:
+            otlp:
+              protocols:
+                grpc:
+                http:
+            filelog:
+              include: [/var/log/pods/*/*/*.log]
+              operators:
+                - type: router
+                  id: get-k8s-attributes
+                  routes:
+                    - output: parse-json
+                      expr: 'body matches "^{"'
+                - type: json_parser
+                  id: parse-json
+                  output: extract_metadata_from_body
+                  timestamp:
+                    parse_from: attributes.time
+                    layout: "%Y-%m-%dT%H:%M:%S.%LZ"
+                - type: move
+                  id: extract_metadata_from_body
+                  from: attributes.log
+                  to: body
+          processors:
+            memory_limiter:
+              check_interval: 1s
+              limit_percentage: 75
+              spike_limit_percentage: 15
+            batch:
+              send_batch_size: 10000
+              timeout: 10s
+            k8sattributes:
+              passthrough: false
+              extract:
+                metadata:
+                  - k8s.namespace.name
+                labels:
+                  - key: konnektr.io/organization-id
+                    from: namespace
+                  - key: konnektr.io/project-id
+                    from: namespace
+            transform:
+              log_statements:
+                - context: resource
+                  statements:
+                    - set(attributes["tenant_id"], Concat([attributes["k8s.label.konnektr.io/organization-id"], "_", attributes["k8s.label.konnektr.io/project-id"]], "")) where attributes["k8s.label.konnektr.io/organization-id"] != nil
+                    - set(attributes["tenant_id"], "unassigned") where attributes["tenant_id"] == nil
+          exporters:
+            loki:
+              endpoint: "http://loki-write.loki.svc.cluster.local:3100/loki/api/v1/push"
+              labels:
+                resource:
+                  k8s.namespace.name: ""
+                  k8s.pod.name: ""
+                  k8s.container.name: ""
+              tenant_id: "resource.attributes.tenant_id"
+            otlphttp/mimir:
+              endpoint: "http://mimir-distributor.mimir.svc.cluster.local:8080/api/v1/push"
+              headers:
+                X-Scope-OrgID: "${resource.attributes.tenant_id}"
+          service:
+            pipelines:
+              logs:
+                receivers: [filelog]
+                processors: [memory_limiter, k8sattributes, transform, batch]
+                exporters: [loki]
+              metrics:
+                receivers: [otlp]
+                processors: [memory_limiter, k8sattributes, transform, batch]
+                exporters: [otlphttp/mimir]
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opentelemetry
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
