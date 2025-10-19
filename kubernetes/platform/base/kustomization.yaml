@@ -5,7 +5,7 @@ resources:
   - envoy-gateway-app.yaml
   - argocd-app.yaml
   - external-secrets-app.yaml
-  - external-secrets-cluster-store-app.yaml
+  - external-secrets-cluster-store.yaml
   - cert-manager-app.yaml
   # - cert-issuers.yaml
   - oauth-gateway.yaml
