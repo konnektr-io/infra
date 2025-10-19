@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - namespace
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.8/manifests/install.yaml
+  - namespace.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.9/manifests/install.yaml
   - argocd-cm.yaml
   # - auth0-external-secret.yaml
   # - github-webhook-external-secret.yaml
@@ -13,8 +13,6 @@ resources:
 
 patches:
   - path: argocd-cm.yaml
-  - path: argocd-cmd-params-cm.yaml
-  - path: spot-node-patch.yaml
   - path: remove-dex.yaml
     target:
       labelSelector: "app.kubernetes.io/component=dex-server"
@@ -32,3 +30,21 @@ patches:
     target:
       kind: ClusterRole
       name: argocd-server
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: .*
+    patch: |-
+      - op: add
+        path: /spec/template/spec/nodeSelector/cloud.google.com~1gke-spot
+        value: 'true'
+  - target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: .*
+    patch: |-
+      - op: add
+        path: /spec/template/spec/nodeSelector/cloud.google.com~1gke-spot
+        value: 'true'

@@ -13,9 +13,23 @@ spec:
   source:
     chart: cert-manager
     helm:
-      parameters:
-        - name: installCRDs
-          value: "true"
+      valuesObject:
+        installCRDs: "true"
+        nodeSelector:
+          cloud.google.com/gke-spot: "true"
+        terminationGracePeriodSeconds: 15
+        webhook:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        cainjector:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        startupapicheck:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
     repoURL: https://charts.jetstack.io
     targetRevision: v1.x
   ignoreDifferences:

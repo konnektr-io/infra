@@ -10,6 +10,12 @@ spec:
     targetRevision: 1.5.1 # update as needed
     helm:
       valuesObject:
+        deployment:
+          envoyGateway:
+            pod:
+              nodeSelector:
+                cloud.google.com/gke-spot: "true"
+              terminationGracePeriodSeconds: 15
         extProc:
           extraEnvVars:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
