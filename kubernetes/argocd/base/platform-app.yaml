@@ -23,16 +23,7 @@ spec:
     - group: "*"
       kind: "*"
   sourceRepos:
-    - https://github.com/konnektr-io/infra.git
-    - https://charts.jetstack.io
-    - https://charts.external-secrets.io
-    - oci://docker.io/envoyproxy/gateway-helm
-    - https://open-telemetry.github.io/opentelemetry-helm-charts
-    - https://fluent.github.io/helm-charts
-    - https://kedacore.github.io/charts
-    - https://grafana.github.io/helm-charts
-    - https://dapr.github.io/helm-charts
-    - https://charts.konnektr.io
+    - '*'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
