@@ -7,7 +7,7 @@ resources:
   - external-secrets-app.yaml
   - external-secrets-cluster-store.yaml
   - cert-manager-app.yaml
-  # - cert-issuers.yaml
+  - cert-issuers.yaml
   - oauth-gateway.yaml
   - global-auth0-security-policy.yaml
   # - loki.yaml

@@ -50,28 +50,22 @@ subjects:
     kind: ServiceAccount
     name: porkbun-webhook
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
-  name: porkbun-secret:reader
-  namespace: cert-manager
-rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    resourceNames: ["porkbun-secret"]
-    verbs: ["get"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: porkbun-webhook:secret-reader
-  namespace: cert-manager
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: porkbun-secret:reader
-subjects:
-  - apiGroup: ""
-    kind: ServiceAccount
-    name: porkbun-webhook
-    namespace: cert-manager
+  name: porkbun-secret
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: gcpsm-secret-store
+    kind: ClusterSecretStore
+  target:
+    name: porkbun-secret
+    creationPolicy: Owner
+  data:
+  - secretKey: APIKEY
+    remoteRef:
+      key: porkbun-apikey
+  - secretKey: SECRETAPIKEY
+    remoteRef:
+      key: porkbun-secretapikey
