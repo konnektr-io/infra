@@ -6,4 +6,3 @@ resources:
 
 patches:
   - path: spot-node-patch.yaml
-

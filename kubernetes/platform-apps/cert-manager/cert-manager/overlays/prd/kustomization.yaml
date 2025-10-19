@@ -3,3 +3,18 @@ kind: Kustomization
 
 resources:
   - ../../base
+
+patches:
+  # Patch cert-manager webhook deployment for spot nodes
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cert-manager-webhook-porkbun
+        namespace: cert-manager
+      spec:
+        template:
+          spec:
+            nodeSelector:
+              cloud.google.com/gke-spot: "true"
+            terminationGracePeriodSeconds: 15

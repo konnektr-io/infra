@@ -25,34 +25,47 @@ spec:
       dbNameKey: DB_NAME
       # sslModeKey: DB_SSLMODE
   # The SQL query to execute
-  query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE project_id = $1;"
+  query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE type = 'Konnektr.Graph';"
   # Go template for the Kubernetes resource(s)
   template: |
-    apiVersion: helm.cattle.io/v1
-    kind: HelmChart
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
     metadata:
-      name: ktrlplane
-      namespace: ktrlplane
+      name: {{ .Row.resource_id | lower }}
+      namespace: argocd
     spec:
-      chart: agedigitaltwins
+      chart: graph
       repo: https://charts.konnektr.io
-      version: "0.28.6"
+      version: "0.2.5"
       targetNamespace: {{ .Row.project_id | lower }}
       valuesContent: |-
-        fullnameOverride: digitaltwins-admin
+        fullnameOverride: {{ .Row.resource_id | lower }}
         cluster:
-          imageName: "apache/age:dev_snapshot_PG17"
-          instances: 1
-          resources:
-            limits:
-              cpu: "1"
-              memory: 2Gi
-            requests:
-              cpu: 50m
-              memory: 1000Mi
+          cluster:
+            imageName: "apache/age:dev_snapshot_PG17"
+            instances: 1
+            affinity:
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: cloud.google.com/gke-spot
+                      operator: In
+                      values:
+                      - "true"
+            resources:
+              limits:
+                cpu: "1"
+                memory: 2Gi
+              requests:
+                cpu: 50m
+                memory: 1000Mi
         api:
           enabled: true
-          imageName: "ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.17.0-preview.2"
+          # Spot node configuration for API
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
           resources:
             limits:
               memory: 1Gi
@@ -62,4 +75,3 @@ spec:
               cpu: 50m
         events:
           enabled: false
-          imageName: "ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.17.0-preview.2"

@@ -4,6 +4,10 @@ server:
   containerSecurityContext:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
+  # Spot node configuration for all server pods
+  nodeSelector:
+    cloud.google.com/gke-spot: "true"
+  terminationGracePeriodSeconds: 15
   # Individual service configurations
   frontend:
     containerSecurityContext:
@@ -81,6 +85,9 @@ grafana:
 # Enable Web UI
 web:
   enabled: true
+  nodeSelector:
+    cloud.google.com/gke-spot: "true"
+  terminationGracePeriodSeconds: 15
 
 # Schema initialization configuration
 # createDatabase disabled since databases are created by CNPG postInitSQL
@@ -91,3 +98,4 @@ schema:
     enabled: true # Still need to setup schema tables
   update:
     enabled: true # Still need to update schema versions
+

@@ -1,0 +1,34 @@
+# Spot node configuration
+nodeSelector:
+  cloud.google.com/gke-spot: "true"
+terminationGracePeriodSeconds: 15
+
+database:
+  enabled: true
+
+ingress:
+  enabled: false
+
+stripe:
+  enabled: true
+  useExternalSecret: true
+  externalSecretName: "stripe-secret"
+  # Product configuration (safe to store in values)
+  products:
+    - resource_type: "Konnektr.Graph"
+      sku: "free"
+      product_id: "prod_T01txFyd6dfzao"
+    - resource_type: "Konnektr.Graph"
+      sku: "standard"
+      product_id: "prod_SzztLZsKSYqiVz"
+    - resource_type: "Konnektr.Flow"
+      sku: "free"
+      product_id: "prod_T0n3Z04EIgDZcT"
+    - resource_type: "Konnektr.Flow"
+      sku: "standard"
+      product_id: "prod_T01up7wLDULGB1"
+
+db-query-operator:
+  enabled: true
+  gvkPattern: "helm.cattle.io/v1/HelmChart;v1/ConfigMap"
+  includeCRDs: true

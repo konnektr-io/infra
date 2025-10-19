@@ -1,0 +1,202 @@
+---
+# Patch for cert-manager Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        nodeSelector:
+          cloud.google.com/gke-spot: "true"
+        terminationGracePeriodSeconds: 15
+        webhook:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        cainjector:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        startupapicheck:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+---
+# Patch for external-secrets Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-secrets
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        nodeSelector:
+          cloud.google.com/gke-spot: "true"
+        terminationGracePeriodSeconds: 15
+        webhook:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        certController:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+---
+# Patch for envoy-gateway Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: envoy-gateway-system
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        deployment:
+          envoyGateway:
+            pod:
+              nodeSelector:
+                cloud.google.com/gke-spot: "true"
+              terminationGracePeriodSeconds: 15
+---
+# Patch for Loki Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        global:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+        distributor:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        ingester:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        querier:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        queryFrontend:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        gateway:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        compactor:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        indexGateway:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        ruler:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+---
+# Patch for Mimir Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mimir
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        global:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+        distributor:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        ingester:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        querier:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        query_frontend:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        store_gateway:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        compactor:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        ruler:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        alertmanager:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+---
+# Patch for Prometheus Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        server:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        alertmanager:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        pushgateway:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        kube-state-metrics:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+        prometheus-node-exporter:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 15
+---
+# Patch for OpenTelemetry Collector Helm chart
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opentelemetry-collector
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        nodeSelector:
+          cloud.google.com/gke-spot: "true"
+        terminationGracePeriodSeconds: 15

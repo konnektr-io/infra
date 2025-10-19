@@ -6,6 +6,17 @@ metadata:
 spec:
   instances: 2
   
+  # Spot node configuration
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: cloud.google.com/gke-spot
+            operator: In
+            values:
+            - "true"
+  
   postgresql:
     parameters:
       max_connections: "200"

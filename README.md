@@ -2,6 +2,29 @@
 
 This repository manages all cloud infrastructure and Kubernetes platform manifests for the Konnektr startup.
 
+## 💰 Cost Optimization
+
+This cluster is configured for **maximum cost savings** using:
+- ✅ **Spot nodes only** (~70% cheaper than regular nodes)
+- ✅ **Cluster hibernation** (scale to 0 when not in use)
+- ✅ **Free Autopilot control plane** (no control plane costs)
+
+**Quick start:**
+```powershell
+# Hibernate cluster (scale to 0)
+.\scripts\cluster-hibernate.ps1
+
+# Wake up cluster
+.\scripts\cluster-wakeup.ps1
+```
+
+**📖 See [Cost Optimization Guide](docs/cost-optimization.md) for details**
+
+**Typical costs:**
+- Active development (8hrs/day): ~$20-40/month
+- Hibernated: ~$0/month
+- Always-on spot nodes: ~$60-100/month
+
 ## Structure
 
 - `terraform/` — Infrastructure as code for Google Cloud (GKE, networking, etc.)
