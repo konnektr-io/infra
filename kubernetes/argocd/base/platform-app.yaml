@@ -26,7 +26,7 @@ spec:
     - https://github.com/konnektr-io/infra.git
     - https://charts.jetstack.io
     - https://charts.external-secrets.io
-    - https://gateway.envoyproxy.io/helm-charts
+    - oci://docker.io/envoyproxy/gateway-helm
     - https://open-telemetry.github.io/opentelemetry-helm-charts
     - https://fluent.github.io/helm-charts
     - https://kedacore.github.io/charts
