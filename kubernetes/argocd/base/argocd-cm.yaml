@@ -6,6 +6,7 @@ metadata:
   namespace: argocd
 data:
   kustomize.buildOptions: --enable-helm
+  application.namespaces: "*"
   url: https://argocd.konnektr.io
   timeout.reconciliation: 24h # Polling frequency (reduced since webhooks handle most updates)
   timeout.reconciliation.jitter: 1h # Add some jitter to avoid thundering herd

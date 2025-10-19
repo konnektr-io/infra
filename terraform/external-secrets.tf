@@ -10,6 +10,7 @@ resource "google_project_iam_member" "external_secrets_secret_accessor" {
   project = var.project_id
   role    = "roles/secretmanager.secretAccessor"
   member  = "serviceAccount:${google_service_account.external_secrets.email}"
+  depends_on = [google_container_cluster.primary]
 }
 
 # Enable Workload Identity binding for external-secrets

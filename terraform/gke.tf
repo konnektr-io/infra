@@ -36,8 +36,8 @@ resource "google_container_cluster" "primary" {
   }
 
   # Disable expensive features
-  logging_service             = "none"
-  monitoring_service          = "none"
+  # logging_service             = "none" # can't disable with autopilot
+  # monitoring_service          = "none" # can't disable with autopilot
   enable_tpu                  = false
   # Enable private cluster for security/cost
   private_cluster_config {
