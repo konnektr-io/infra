@@ -19,6 +19,7 @@ spec:
             pod:
               nodeSelector:
                 cloud.google.com/gke-spot: "true"
+              terminationGracePeriodSeconds: 15
         extProc:
           extraEnvVars:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
