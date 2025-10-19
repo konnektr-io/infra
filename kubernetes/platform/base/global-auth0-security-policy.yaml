@@ -5,9 +5,9 @@ metadata:
   namespace: envoy-gateway-system
 spec:
   # Use label selector instead of targetRefs to apply to multiple gateways
-  targetSelector:
-    matchLabels:
-      auth.konnektr.io/enabled: "true"
+  targetSelectors:
+    - matchLabels:
+        auth.konnektr.io/enabled: "true"
   oidc:
     provider:
       issuer: "https://auth.konnektr.io/"
