@@ -23,6 +23,7 @@ spec:
     - group: "*"
       kind: "*"
   sourceRepos:
+    - https://github.com/konnektr-io/infra.git
     - https://charts.jetstack.io
     - https://charts.external-secrets.io
     - https://gateway.envoyproxy.io/helm-charts
