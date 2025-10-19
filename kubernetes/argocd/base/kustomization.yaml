@@ -9,7 +9,7 @@ resources:
   # - argocd-gateway.yaml
   # - argocd-server-httproute.yaml
   - auth0-external-secret.yaml
-  - github-webhook-external-secret.yaml
+  # - github-webhook-external-secret.yaml
 
 patches:
   - path: argocd-cm.yaml
