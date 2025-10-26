@@ -1,0 +1,76 @@
+apiVersion: konnektr.io/v1alpha1
+kind: DatabaseQueryResource
+metadata:
+  name: graph-dbqr
+  finalizers:
+    - konnektr.io/databasequeryresource-finalizer
+spec:
+  # How often to query the database and reconcile
+  pollInterval: "5m"
+  # Whether to delete resources if their corresponding DB row disappears (default: true)
+  prune: true
+  database:
+    type: postgres
+    connectionSecretRef:
+      name: ktrlplane-db-app
+      uriKey: uri
+  # The SQL query to execute
+  query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE type = 'Konnektr.Graph';"
+  # Go template for the Kubernetes resource(s)
+  template: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: {{ .Row.resource_id | lower }}
+      labels:
+        konnektr.io/project-id: {{ .Row.project_id | lower }}
+        konnektr.io/org-id: {{ .Row.org_id | lower }}
+    spec:
+      project: {{ .Row.project_id | lower }}
+      source:
+        repoURL: oci://ghcr.io/konnektr-io/charts/graph
+        path: .
+        targetRevision: 0.3.3
+        helm:
+          valuesObject:
+            cluster:
+              cluster:
+                instances: 1
+                affinity:
+                  nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                      nodeSelectorTerms:
+                      - matchExpressions:
+                        - key: cloud.google.com/gke-spot
+                          operator: In
+                          values:
+                          - "true"
+                resources:
+                  limits:
+                    cpu: "1"
+                    memory: 2Gi
+                  requests:
+                    cpu: 50m
+                    memory: 1000Mi
+            api:
+              enabled: true
+              # Spot node configuration for API
+              nodeSelector:
+                cloud.google.com/gke-spot: "true"
+              terminationGracePeriodSeconds: 15
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 1Gi
+                requests:
+                  cpu: 50m
+                  memory: 250Mi
+            events:
+              enabled: false
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{ .Row.project_id | lower }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

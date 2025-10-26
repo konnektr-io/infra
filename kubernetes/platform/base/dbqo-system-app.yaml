@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dbqo-system
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: dbqo-system
+    server: https://kubernetes.default.svc
+  project: platform
+  source:
+    chart: db-query-operator
+    repoURL: oci://ghcr.io/konnektr-io/charts/db-query-operator:0.6.0
+    path: .
+    helm:
+      valuesObject:
+        gvkPattern: "argoproj.io/v1alpha1/Application;argoproj.io/v1alpha1/AppProject;v1/Namespace"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

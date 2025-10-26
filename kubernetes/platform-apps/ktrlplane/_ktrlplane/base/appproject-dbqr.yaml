@@ -1,7 +1,7 @@
 apiVersion: konnektr.io/v1alpha1
 kind: DatabaseQueryResource
 metadata:
-  name: konnektr-project-namespace
+  name: appproject-dbqr
   namespace: ktrlplane
   finalizers:
     - konnektr.io/databasequeryresource-finalizer
@@ -13,22 +13,24 @@ spec:
   database:
     type: postgres
     connectionSecretRef:
-      # Name of the Secret created earlier
-      name: ktrlplane-db-secret
-      # Optional: Namespace of the Secret (defaults to this CR's namespace)
-      # namespace: database-secrets
-      # Optional: Override default keys in the Secret
-      hostKey: DB_HOST
-      portKey: DB_PORT
-      userKey: DB_USER
-      passwordKey: DB_PASSWORD
-      dbNameKey: DB_NAME
-      # sslModeKey: DB_SSLMODE
+      name: ktrlplane-db-app
+      uriKey: uri
   # The SQL query to execute
   query: "SELECT project_id, org_id FROM ktrlplane.projects;"
   # Go template for the Kubernetes resource(s)
   template: |
-    apiVersion: v1
-    kind: Namespace
+    apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
     metadata:
       name: {{ .Row.project_id | lower }}
+      labels:
+        konnektr.io/project-id: {{ .Row.project_id | lower }}
+        konnektr.io/org-id: {{ .Row.org_id | lower }}
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      sourceRepos:
+      - 'oci://ghcr.io/konnektr-io/charts/graph'
+      destinations:
+      - namespace: {{ .Row.project_id | lower }}
+        server: https://kubernetes.default.svc

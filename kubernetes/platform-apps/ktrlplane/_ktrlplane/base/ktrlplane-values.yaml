@@ -4,7 +4,9 @@ nodeSelector:
 terminationGracePeriodSeconds: 15
 
 database:
-  enabled: true
+  enabled: false
+  useExternalSecret: true
+  externalSecretName: "ktrlplane-db-app"
 
 ingress:
   enabled: false
@@ -29,6 +31,5 @@ stripe:
       product_id: "prod_T01up7wLDULGB1"
 
 db-query-operator:
-  enabled: true
-  gvkPattern: "helm.cattle.io/v1/HelmChart;v1/ConfigMap"
-  includeCRDs: true
+  enabled: false
+  gvkPattern: "argoproj.io/v1alpha1/Application;v1/ConfigMap"
