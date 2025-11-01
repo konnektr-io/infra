@@ -9,10 +9,10 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/konnektr-io/infra.git
-        revision: develop
+        revision: main
         directories:
-          - path: kubernetes/platform-apps/*/*/overlays/prd
-          - path: kubernetes/platform-apps/*/_*/overlays/prd
+          - path: kubernetes/apps/*/*/overlays/prd
+          - path: kubernetes/apps/*/_*/overlays/prd
             exclude: true
   template:
     metadata:
@@ -25,7 +25,7 @@ spec:
       project: "platform"
       source:
         repoURL: https://github.com/konnektr-io/infra.git
-        targetRevision: develop
+        targetRevision: main
         path: "{{.path.path}}"
 
         kustomize:
