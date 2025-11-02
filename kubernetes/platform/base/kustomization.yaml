@@ -11,12 +11,13 @@ resources:
   - oauth-gateway.yaml
   - global-auth0-security-policy.yaml
 
+  - platform-appset.yaml
+
   # - loki.yaml
   # - mimir.yaml
   # - prometheus.yaml
   # - opentelemetry-collector.yaml
-
-  # - platform-appset.yaml
+  
   # - dbqo-system-app.yaml
   # - apps-appproject.yaml
   # - apps-appset.yaml

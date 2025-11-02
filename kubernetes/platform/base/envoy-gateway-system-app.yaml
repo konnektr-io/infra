@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: oci://docker.io/envoyproxy/gateway-helm
     path: .
-    targetRevision: 1.5.1 # update as needed
+    targetRevision: 1.x
     helm:
       valuesObject:
         deployment:
@@ -19,7 +19,7 @@ spec:
         extProc:
           extraEnvVars:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://platform-collector.opentelemetry.svc.cluster.local:4317
+              value: http://opentelemetry-collector.opentelemetry.svc.cluster.local:4317
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
               value: grpc
             - name: OTEL_SERVICE_NAME

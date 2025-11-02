@@ -17,19 +17,19 @@ spec:
         installCRDs: "true"
         nodeSelector:
           cloud.google.com/gke-spot: "true"
-        terminationGracePeriodSeconds: 15
+        terminationGracePeriodSeconds: 25
         webhook:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 15
+          terminationGracePeriodSeconds: 25
         cainjector:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 15
+          terminationGracePeriodSeconds: 25
         startupapicheck:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 15
+          terminationGracePeriodSeconds: 25
     repoURL: https://charts.jetstack.io
     targetRevision: v1.x
   ignoreDifferences:
