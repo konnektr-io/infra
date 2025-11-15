@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: platform
   source:
     repoURL: https://grafana.github.io/helm-charts
     chart: mimir-distributed
@@ -21,7 +21,7 @@ spec:
             blocks_storage:
               backend: gcs
               gcs:
-                bucket_name: "konnektr-mimir-data" # <-- YOUR GCS BUCKET NAME
+                bucket_name: "konnektr-mimir-data"
                 service_account_path: /var/gcs/gcs.json
         # Mount the secret for all Mimir components that access storage
         compactor:

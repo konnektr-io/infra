@@ -27,6 +27,8 @@ spec:
       labels:
         app: oauth-status
     spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
       containers:
         - name: oauth-status
           image: nginx:alpine

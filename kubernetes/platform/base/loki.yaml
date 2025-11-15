@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: platform
   source:
     repoURL: https://grafana.github.io/helm-charts
     chart: loki-distributed
@@ -19,8 +19,7 @@ spec:
           storage:
             type: gcs
             gcs:
-              bucketName: "konnektr-loki-data" # <-- YOUR GCS BUCKET NAME
-              # Mount the GCS service account key from the secret
+              bucketName: "konnektr-loki-data"
               serviceAccount:
                 secretKeyRef:
                   name: gcs-credentials
