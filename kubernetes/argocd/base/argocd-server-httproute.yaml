@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: argocd-gateway
-      namespace: argocd
+    - name: external
+      namespace: platform
   hostnames:
     - argocd.konnektr.io
   rules:

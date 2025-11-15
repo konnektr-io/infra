@@ -2,7 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: oauth-gateway
-  namespace: envoy-gateway-system
+  namespace: platform
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-dns"
 spec:
@@ -24,7 +24,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: oauth-status-service
-  namespace: envoy-gateway-system
+  namespace: platform
 spec:
   selector:
     app: oauth-status
@@ -36,7 +36,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oauth-status
-  namespace: envoy-gateway-system
+  namespace: platform
 spec:
   replicas: 1
   selector:
@@ -76,7 +76,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oauth-status-html
-  namespace: envoy-gateway-system
+  namespace: platform
 data:
   index.html: |
     <!DOCTYPE html>
@@ -94,7 +94,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oauth-status-nginx
-  namespace: envoy-gateway-system
+  namespace: platform
 data:
   default.conf: |
     server {
@@ -110,11 +110,11 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: oauth-callback
-  namespace: envoy-gateway-system
+  namespace: platform
 spec:
   parentRefs:
-    - name: oauth-gateway
-      namespace: envoy-gateway-system
+    - name: external
+      namespace: platform
   hostnames:
     - oauth.konnektr.io
   rules:
