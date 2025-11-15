@@ -4,9 +4,9 @@ metadata:
   name: ktrlplane
 spec:
   parentRefs:
-    - name: ktrlplane
+    - name: external
       type: Gateway
-      namespace: ktrlplane
+      namespace: platform
   hostnames:
     - ktrlplane.konnektr.io
   rules:

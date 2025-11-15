@@ -16,3 +16,23 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: argocd-tls
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: oauth.konnektr.io
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: oauth-tls
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: ktrlplane.konnektr.io
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: ktrlplane-tls
