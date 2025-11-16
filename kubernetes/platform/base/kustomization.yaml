@@ -3,8 +3,10 @@ kind: Kustomization
 
 resources:
   - external-gateway.yaml
+
   - external-secrets-app.yaml
   - external-secrets-cluster-store.yaml
+
   - argocd-app.yaml
 
   # - envoy-gateway-system-app.yaml
