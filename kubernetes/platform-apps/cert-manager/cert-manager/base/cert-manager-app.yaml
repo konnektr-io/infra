@@ -16,11 +16,10 @@ spec:
     chart: cert-manager
     helm:
       valuesObject:
-        installCRDs: "true"
-        config:
-          apiVersion: controller.config.cert-manager.io/v1alpha1
-          kind: ControllerConfiguration
-          enableGatewayAPI: "true"
+        crds:
+          enabled: true
+        extraArgs:
+          - --feature-gates=GatewayAPISupport=true
         nodeSelector:
           cloud.google.com/gke-spot: "true"
         terminationGracePeriodSeconds: 25
@@ -37,7 +36,7 @@ spec:
             cloud.google.com/gke-spot: "true"
           terminationGracePeriodSeconds: 25
     repoURL: https://charts.jetstack.io
-    targetRevision: v1.x
+    targetRevision: v1.19.1
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
