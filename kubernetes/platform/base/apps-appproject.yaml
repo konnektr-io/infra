@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: apps
-  namespace: platform
+  namespace: argocd
 spec:
   clusterResourceWhitelist:
     - group: "*"
