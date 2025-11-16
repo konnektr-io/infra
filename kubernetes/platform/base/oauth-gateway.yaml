@@ -1,4 +1,3 @@
-# Simple status service to handle any non-OAuth requests to oauth.konnektr.io
 apiVersion: v1
 kind: Service
 metadata:
