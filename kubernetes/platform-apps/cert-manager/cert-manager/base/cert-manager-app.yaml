@@ -16,8 +16,7 @@ spec:
     chart: cert-manager
     helm:
       valuesObject:
-        crds:
-          enabled: true
+        installCRDs: true
         extraArgs:
           - --feature-gates=GatewayAPISupport=true
         nodeSelector:
