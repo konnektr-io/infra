@@ -80,7 +80,7 @@ if (-not $SkipCertManager) {
         jetstack/cert-manager `
         --namespace cert-manager `
         --create-namespace `
-        --version v1.16.3 `
+        --version v1.19.1 `
         --set crds.enabled=true `
         --set featureGates="ExperimentalGatewayAPISupport=true" `
         --set nodeSelector."cloud\.google\.com/gke-spot"="true" `
