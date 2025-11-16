@@ -9,8 +9,8 @@ resources:
 
   # - envoy-gateway-system-app.yaml
 
-  - oauth-gateway.yaml
-  - global-auth0-security-policy.yaml
+  # - oauth-gateway.yaml
+  # - global-auth0-security-policy.yaml
 
   - platform-appset.yaml
 
