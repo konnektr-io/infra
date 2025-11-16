@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: gke-l7-regional-external-managed
   listeners:
-    - name: https
+    - name: argocd-https
       protocol: HTTPS
       hostname: argocd.konnektr.io
       port: 443
@@ -16,7 +16,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: argocd-tls
-    - name: https
+    - name: oauth-https
       protocol: HTTPS
       port: 443
       hostname: oauth.konnektr.io
@@ -26,7 +26,7 @@ spec:
           - kind: Secret
             group: ""
             name: oauth-tls
-    - name: https
+    - name: ktrlplane-https
       protocol: HTTPS
       port: 443
       hostname: ktrlplane.konnektr.io
