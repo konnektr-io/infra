@@ -3,6 +3,8 @@ kind: ClusterIssuer
 metadata:
   name: letsencrypt-dns
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"  # After cert-manager and webhook are ready
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory

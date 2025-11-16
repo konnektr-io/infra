@@ -49,16 +49,40 @@ This cluster is configured for **maximum cost savings** using:
 4. Initialize and apply:
    ```sh
    terraform init
-   terraform plan -var-file=envs/prod/terraform.tfvars
-   terraform apply -var-file=envs/prod/terraform.tfvars
+   terraform plan
+   terraform apply
    ```
+
+### Add cluster to kubeconfig
+```sh
+gcloud container clusters get-credentials konnektr-gke --region europe-west1 --project konnektr
+```
+
+### Bootstrap the Cluster
+
+**Important:** Components must be installed in the correct order:
+
+1. **External Secrets Operator** (to fetch secrets from Google Secret Manager)
+2. **ArgoCD** (which depends on secrets managed by ESO)
+3. **Platform apps** (managed by ArgoCD)
+
+Run the bootstrap script:
+```powershell
+cd scripts
+.\bootstrap-cluster.ps1
+```
+
+This script will:
+- Install External Secrets Operator via Helm
+- Create the ClusterSecretStore for Google Secret Manager
+- Install ArgoCD (which will then adopt ESO and manage all platform apps)
 
 ### Kubernetes & GitOps
 
 - Manifests are organized with `base` and `overlays` for each component.
 - Use [Kustomize](https://kustomize.io/) for overlays.
-- ArgoCD ApplicationSet is defined in `kubernetes/platform/application-set.yaml`.
-- To bootstrap ArgoCD, apply manifests in `kubernetes/argocd/overlays/prd`.
+- ArgoCD sync waves ensure proper installation order (see `.metadata.annotations` in manifests).
+- Platform applications are automatically deployed via ArgoCD ApplicationSets.
 
 ## Best Practices
 
