@@ -13,6 +13,8 @@ spec:
     server: https://kubernetes.default.svc
   project: platform
   source:
+    repoURL: https://charts.jetstack.io
+    targetRevision: v1.19.1
     chart: cert-manager
     helm:
       valuesObject:
@@ -34,8 +36,6 @@ spec:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
           terminationGracePeriodSeconds: 25
-    repoURL: https://charts.jetstack.io
-    targetRevision: v1.19.1
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
