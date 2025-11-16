@@ -1,0 +1,38 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls
+  namespace: platform
+spec:
+  secretName: argocd-tls
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer
+  dnsNames:
+    - argocd.konnektr.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: oauth-tls
+  namespace: platform
+spec:
+  secretName: oauth-tls
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer
+  dnsNames:
+    - oauth.konnektr.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ktrlplane-tls
+  namespace: platform
+spec:
+  secretName: ktrlplane-tls
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer
+  dnsNames:
+    - ktrlplane.konnektr.io

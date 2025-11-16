@@ -38,3 +38,9 @@ variable "artifact_registry_name" {
   description = "Artifact Registry repository name"
   type        = string
 }
+
+variable "proxy_subnet_cidr" {
+  description = "CIDR range for proxy-only subnet (must be /23 or larger; must not overlap existing subnet; avoid 10.128.0.0/9 in auto networks)"
+  type        = string
+  default     = "10.10.2.0/23"
+}
