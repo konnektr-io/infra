@@ -4,6 +4,7 @@
 
 param(
     [switch]$SkipExternalSecrets,
+    [switch]$SkipCertManager,
     [switch]$SkipArgoCD
 )
 
@@ -63,10 +64,64 @@ if (-not $SkipExternalSecrets) {
     Write-Host "✓ External Secrets Operator is ready" -ForegroundColor Green
 }
 
-# Step 3: Install ArgoCD
+# Step 3: Install cert-manager
+if (-not $SkipCertManager) {
+    Write-Host ""
+    Write-Host "Step 3: Installing cert-manager..." -ForegroundColor Yellow
+    
+    # Add Helm repo
+    Write-Host "  Adding cert-manager Helm repository..."
+    helm repo add jetstack https://charts.jetstack.io
+    helm repo update
+    
+    # Install cert-manager with CRDs
+    Write-Host "  Installing cert-manager chart with CRDs..."
+    helm upgrade --install cert-manager `
+        jetstack/cert-manager `
+        --namespace cert-manager `
+        --create-namespace `
+        --version v1.16.3 `
+        --set crds.enabled=true `
+        --set featureGates="ExperimentalGatewayAPISupport=true" `
+        --set nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        --set webhook.nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        --set cainjector.nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        --set startupapicheck.nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        --wait
+    
+    Write-Host "✓ cert-manager installed" -ForegroundColor Green
+    
+    # Wait for cert-manager to be ready
+    Write-Host ""
+    Write-Host "Waiting for cert-manager to be ready..." -ForegroundColor Yellow
+    kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=cert-manager -n cert-manager --timeout=120s
+    kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=webhook -n cert-manager --timeout=120s
+    kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=cainjector -n cert-manager --timeout=120s
+    
+    # Verify CRDs are installed
+    Write-Host ""
+    Write-Host "Verifying cert-manager CRDs..." -ForegroundColor Yellow
+    $crdCount = (kubectl get crd | Select-String "cert-manager.io").Count
+    if ($crdCount -lt 6) {
+        Write-Error "Expected at least 6 cert-manager CRDs, found $crdCount"
+        exit 1
+    }
+    Write-Host "✓ cert-manager CRDs installed ($crdCount found)" -ForegroundColor Green
+}
+
+# Step 4: Install ArgoCD
 if (-not $SkipArgoCD) {
     Write-Host ""
-    Write-Host "Step 3: Installing ArgoCD..." -ForegroundColor Yellow
+    Write-Host "Step 4: Installing ArgoCD..." -ForegroundColor Yellow
+    kubectl apply -k ../kubernetes/argocd/overlays/prd -n argocd
+    
+    # Wait for CRDs to be established before second apply
+    Write-Host ""
+    Write-Host "Waiting for ArgoCD CRDs to be established..." -ForegroundColor Yellow
+    Start-Sleep -Seconds 5
+    
+    # Apply again to ensure all resources are created (fixes webhook timing issues)
+    Write-Host "  Applying ArgoCD manifests (second pass)..." -ForegroundColor Yellow
     kubectl apply -k ../kubernetes/argocd/overlays/prd -n argocd
     
     Write-Host ""
@@ -84,5 +139,5 @@ Write-Host "1. Check ArgoCD is healthy: kubectl get pods -n argocd"
 Write-Host "2. Access ArgoCD UI: https://argocd.konnektr.io"
 Write-Host "3. Get admin password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
 Write-Host ""
-Write-Host "Note: ArgoCD will automatically adopt the External Secrets Operator Helm release." -ForegroundColor Yellow
-Write-Host "      You can verify in the ArgoCD UI that the 'external-secrets' app is synced." -ForegroundColor Yellow
+Write-Host "Note: ArgoCD will automatically adopt the Helm releases (external-secrets, cert-manager)." -ForegroundColor Yellow
+Write-Host "      You can verify in the ArgoCD UI that these apps are synced and healthy." -ForegroundColor Yellow
