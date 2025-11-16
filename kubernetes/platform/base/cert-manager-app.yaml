@@ -21,7 +21,7 @@ spec:
       valuesObject:
         crds:
           enabled: true
-        featureGates: GatewayAPISupport
+        featureGates: ExperimentalGatewayAPISupport
         nodeSelector:
           cloud.google.com/gke-spot: "true"
         webhook:
