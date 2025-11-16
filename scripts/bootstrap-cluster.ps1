@@ -67,7 +67,7 @@ if (-not $SkipExternalSecrets) {
 if (-not $SkipArgoCD) {
     Write-Host ""
     Write-Host "Step 3: Installing ArgoCD..." -ForegroundColor Yellow
-    kubectl apply -k ../kubernetes/argocd/overlays/prd
+    kubectl apply -k ../kubernetes/argocd/overlays/prd -n argocd
     
     Write-Host ""
     Write-Host "Waiting for ArgoCD to be ready..." -ForegroundColor Yellow
