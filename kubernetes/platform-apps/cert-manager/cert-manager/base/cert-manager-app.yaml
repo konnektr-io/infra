@@ -16,9 +16,9 @@ spec:
     chart: cert-manager
     helm:
       valuesObject:
-        installCRDs: true
-        extraArgs:
-          - --feature-gates=GatewayAPISupport=true
+        crds:
+          enabled: true
+        featureGates: GatewayAPISupport
         nodeSelector:
           cloud.google.com/gke-spot: "true"
         terminationGracePeriodSeconds: 25
