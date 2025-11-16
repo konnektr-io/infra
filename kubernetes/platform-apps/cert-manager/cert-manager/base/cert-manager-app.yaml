@@ -24,19 +24,15 @@ spec:
         featureGates: GatewayAPISupport
         nodeSelector:
           cloud.google.com/gke-spot: "true"
-        terminationGracePeriodSeconds: 25
         webhook:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 25
         cainjector:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 25
         startupapicheck:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 25
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
