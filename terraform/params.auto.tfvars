@@ -1,6 +1,6 @@
 project_id             = "konnektr"
 project_number         = "720202460313"
-gke_name               = "konnektr-gke"
+gke_name               = "konnektr"
 network_name           = "konnektr-vpc"
 subnet_name            = "konnektr-subnet"
 subnet_cidr            = "10.10.0.0/24"

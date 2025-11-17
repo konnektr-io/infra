@@ -32,7 +32,7 @@ This repository manages all cloud infrastructure and Kubernetes platform manifes
 
 ### Add cluster to kubeconfig
 ```sh
-gcloud container clusters get-credentials konnektr-gke --region europe-west1 --project konnektr
+gcloud container clusters get-credentials konnektr --region europe-west1 --project konnektr
 ```
 
 ### Bootstrap the Cluster
