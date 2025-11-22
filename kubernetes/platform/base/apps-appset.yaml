@@ -22,7 +22,7 @@ spec:
       annotations:
         argocd.argoproj.io/manifest-generate-paths: ../../
     spec:
-      project: "platform"
+      project: "apps"
       source:
         repoURL: https://github.com/konnektr-io/infra.git
         targetRevision: main
