@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     path: kubernetes/argocd/overlays/prd
-    repoURL: https://github.com/Arcadis/digitaltwins-core.git
+    repoURL: https://github.com/konnektr-io/infra.git
     targetRevision: main
   syncPolicy:
     automated:
