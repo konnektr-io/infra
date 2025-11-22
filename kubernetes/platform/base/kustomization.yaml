@@ -11,11 +11,11 @@ resources:
   - cert-manager-porkbun-webhook-app.yaml
   - cert-issuers.yaml
 
+  - envoy-gateway-system-app.yaml
   - external-gateway.yaml
 
   - platform-appset.yaml
 
-  # - envoy-gateway-system-app.yaml
 
   # - oauth-gateway.yaml
   # - global-auth0-security-policy.yaml

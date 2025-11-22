@@ -6,7 +6,8 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-dns"
 spec:
-  gatewayClassName: gke-l7-regional-external-managed
+  # gatewayClassName: gke-l7-regional-external-managed
+  gatewayClassName: eg
   addresses:
   - type: NamedAddress
     value: gateway-external-ip
