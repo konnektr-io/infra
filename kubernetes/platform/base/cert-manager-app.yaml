@@ -34,6 +34,8 @@ spec:
         startupapicheck:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
+        leaderElection:
+          namespace: cert-manager
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
