@@ -35,3 +35,5 @@ spec:
       destinations:
       - namespace: {{ .Row.project_id | lower }}
         server: https://kubernetes.default.svc
+      - namespace: graph
+        server: https://kubernetes.default.svc
