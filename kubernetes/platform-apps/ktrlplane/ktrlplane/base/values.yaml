@@ -6,7 +6,7 @@ terminationGracePeriodSeconds: 15
 database:
   enabled: false
   useExternalSecret: true
-  externalSecretName: "ktrlplane-db-app"
+  externalSecretName: "ktrlplane-app"
 
 ingress:
   enabled: false
