@@ -29,7 +29,8 @@ spec:
         - resources-finalizer.argocd.argoproj.io
     spec:
       sourceRepos:
-      - 'oci://ghcr.io/konnektr-io/charts/graph'
+      - 'oci://ghcr.io/konnektr-io/**'
+      - 'https://charts.konnektr.io'
       destinations:
       - namespace: {{ .Row.project_id | lower }}
         server: https://kubernetes.default.svc
