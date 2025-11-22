@@ -32,6 +32,7 @@ spec:
         targetRevision: 0.3.5
         helm:
           valuesObject:
+            fullnameOverride: {{ .Row.resource_id | lower }}
             cluster:
               enabled: true
               cluster:
@@ -47,7 +48,6 @@ spec:
                     cpu: 50m
                     memory: 1000Mi
             api:
-              serviceAccountName: {{ .Row.resource_id | lower }}-cluster
               enabled: true
               # Spot node configuration for API
               nodeSelector:
