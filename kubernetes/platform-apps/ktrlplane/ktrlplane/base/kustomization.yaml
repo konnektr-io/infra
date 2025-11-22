@@ -5,8 +5,8 @@ resources:
   - cluster.yaml
   - httproute.yaml
   - stripe-external-secret.yaml
-  # - namespace-dbqr.yam
-  # - appproject-dbqr.yaml
+  - namespace-dbqr.yam
+  - appproject-dbqr.yaml
 
 helmCharts:
   - name: ktrlplane

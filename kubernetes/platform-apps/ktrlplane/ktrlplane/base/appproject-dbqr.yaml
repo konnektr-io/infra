@@ -12,7 +12,7 @@ spec:
   database:
     type: postgres
     connectionSecretRef:
-      name: ktrlplane-db-app
+      name: ktrlplane-app
       uriKey: uri
   # The SQL query to execute
   query: "SELECT project_id, org_id FROM ktrlplane.projects;"
