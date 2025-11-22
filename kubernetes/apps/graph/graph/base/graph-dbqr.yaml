@@ -24,7 +24,7 @@ spec:
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
     spec:
-      project: {{ .Row.project_id | lower }}
+      project: graph
       source:
         repoURL: oci://ghcr.io/konnektr-io/charts/graph
         path: .
