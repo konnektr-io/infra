@@ -11,7 +11,6 @@ spec:
     server: https://kubernetes.default.svc
   project: platform
   source:
-    chart: db-query-operator
     repoURL: oci://ghcr.io/konnektr-io/charts/db-query-operator
     targetRevision: 0.6.2
     path: .
