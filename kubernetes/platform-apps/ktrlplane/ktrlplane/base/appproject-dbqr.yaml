@@ -22,6 +22,7 @@ spec:
     kind: AppProject
     metadata:
       name: {{ .Row.project_id | lower }}
+      namespace: argocd
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
         konnektr.io/org-id: {{ .Row.org_id | lower }}
