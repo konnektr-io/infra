@@ -23,7 +23,6 @@ spec:
       name: {{ .Row.resource_id | lower }}
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
-        konnektr.io/org-id: {{ .Row.org_id | lower }}
     spec:
       project: {{ .Row.project_id | lower }}
       source:
