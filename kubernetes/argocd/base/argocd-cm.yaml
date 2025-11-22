@@ -17,8 +17,7 @@ data:
   # Webhook configuration
   webhook.github.secret: $webhook.github.secret
   exec.enabled: "true"
-  admin.enabled: "true"
-  accounts.admin: apiKey, login
+  admin.enabled: "false"
   oidc.config: |
     name: Auth0
     issuer: https://auth.konnektr.io/ 
