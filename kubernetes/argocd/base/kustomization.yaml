@@ -5,7 +5,6 @@ resources:
   - namespace.yaml
   - default-approject.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.9/manifests/install.yaml
-  - argocd-cm.yaml
   - platform-app.yaml
   - argocd-server-httproute.yaml
   - auth0-external-secret.yaml
