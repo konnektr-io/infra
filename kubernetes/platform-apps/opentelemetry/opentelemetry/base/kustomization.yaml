@@ -4,3 +4,12 @@ kind: Kustomization
 resources:
   - https://github.com/open-telemetry/opentelemetry-operator/releases/download/v0.140.0/opentelemetry-operator.yaml
 # - opentelemetry-collector.yaml
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/nodeSelector
+        value:
+          cloud.google.com/gke-spot: "true"
+    target:
+      kind: Deployment
