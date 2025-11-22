@@ -24,9 +24,6 @@ frontend:
 backend:
   nodeSelector:
     cloud.google.com/gke-spot: "true"
-  initContainer:
-    nodeSelector:
-      cloud.google.com/gke-spot: "true"
   
 stripe:
   enabled: true
