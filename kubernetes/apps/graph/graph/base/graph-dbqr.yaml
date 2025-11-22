@@ -21,6 +21,7 @@ spec:
     kind: Application
     metadata:
       name: {{ .Row.resource_id | lower }}
+      namespace: argocd
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
     spec:
