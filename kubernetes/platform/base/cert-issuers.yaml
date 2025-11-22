@@ -50,7 +50,8 @@ roleRef:
 subjects:
   - apiGroup: ""
     kind: ServiceAccount
-    name: porkbun-webhook
+    name: cert-manager-porkbun-webhook
+    namespace: cert-manager
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
