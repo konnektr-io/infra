@@ -33,6 +33,7 @@ spec:
         helm:
           valuesObject:
             cluster:
+              enabled: true
               cluster:
                 instances: 1
                 affinity:
