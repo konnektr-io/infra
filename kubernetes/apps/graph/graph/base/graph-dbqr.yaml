@@ -35,6 +35,7 @@ spec:
             fullnameOverride: {{ .Row.resource_id | lower }}
             cluster:
               enabled: true
+              fullnameOverride: {{ .Row.resource_id | lower }}
               cluster:
                 instances: 1
                 affinity:
