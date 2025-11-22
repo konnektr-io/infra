@@ -33,7 +33,5 @@ spec:
       - 'oci://ghcr.io/konnektr-io/**'
       - 'https://charts.konnektr.io'
       destinations:
-      - namespace: {{ .Row.project_id | lower }}
-        server: https://kubernetes.default.svc
-      - namespace: graph
+      - namespace: *
         server: https://kubernetes.default.svc
