@@ -2,8 +2,6 @@ apiVersion: konnektr.io/v1alpha1
 kind: DatabaseQueryResource
 metadata:
   name: graph-dbqr
-  finalizers:
-    - konnektr.io/databasequeryresource-finalizer
 spec:
   # How often to query the database and reconcile
   pollInterval: "5m"
@@ -12,7 +10,8 @@ spec:
   database:
     type: postgres
     connectionSecretRef:
-      name: ktrlplane-db-app
+      name: ktrlplane-app
+      namespace: ktrlplane
       uriKey: uri
   # The SQL query to execute
   query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE type = 'Konnektr.Graph';"
