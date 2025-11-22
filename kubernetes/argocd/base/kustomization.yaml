@@ -13,7 +13,7 @@ resources:
   - argocd-server-application-controller-rbac.yaml
 
 patches:
-  - path: argocd-cm.yaml
+  # - path: argocd-cm.yaml
   - path: argocd-cmd-params-cm.yaml
   - path: remove-dex.yaml
     target:
