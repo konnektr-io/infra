@@ -2,7 +2,6 @@ apiVersion: konnektr.io/v1alpha1
 kind: DatabaseQueryResource
 metadata:
   name: appproject-dbqr
-  namespace: ktrlplane
   finalizers:
     - konnektr.io/databasequeryresource-finalizer
 spec:
