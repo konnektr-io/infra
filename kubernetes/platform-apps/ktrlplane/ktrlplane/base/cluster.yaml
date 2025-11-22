@@ -5,6 +5,10 @@ metadata:
 spec:
   instances: 2
 
+  affinity:
+    nodeSelector:
+      cloud.google.com/gke-spot: "true"
+
   postgresql:
     parameters:
       max_connections: "200"
