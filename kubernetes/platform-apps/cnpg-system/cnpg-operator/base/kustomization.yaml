@@ -31,8 +31,13 @@ patches:
         value:
           prometheus.io/scrape: "true"
           prometheus.io/port: "8080"
+      - op: add
+        path: /spec/template/spec/nodeSelector/cloud.google.com~1gke-spot
+        value: 'true'
+      - op: add
+        path: /spec/template/spec/terminationGracePeriodSeconds
+        value: 25
     target:
-      name: cnpg-controller-manager
       kind: Deployment
 
 configMapGenerator:
