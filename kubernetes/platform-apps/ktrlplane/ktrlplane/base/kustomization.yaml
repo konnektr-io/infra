@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - cluster.yaml
   - httproute.yaml
   - stripe-external-secret.yaml
   - namespace-dbqr.yam
@@ -10,7 +11,7 @@ resources:
 helmCharts:
   - name: ktrlplane
     releaseName: ktrlplane
-    valuesFile: ktrlplane-values.yaml
+    valuesFile: values.yaml
     repo: https://charts.konnektr.io
     version: 0.3.0
     namespace: ktrlplane
