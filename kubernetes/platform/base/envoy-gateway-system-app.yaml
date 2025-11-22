@@ -12,10 +12,9 @@ spec:
     helm:
       valuesObject:
         deployment:
-          envoyGateway:
-            pod:
-              nodeSelector:
-                cloud.google.com/gke-spot: "true"
+          pod:
+            nodeSelector:
+              cloud.google.com/gke-spot: "true"
         extProc:
           extraEnvVars:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
