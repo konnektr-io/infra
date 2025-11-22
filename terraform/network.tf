@@ -33,14 +33,14 @@ resource "google_compute_router_nat" "nat" {
 
 // Proxy-only subnet for regional external Application Load Balancer
 // Required for regional external Gateway (gke-l7-regional-external-managed)
-resource "google_compute_subnetwork" "proxy_only_subnet" {
-  name          = "${var.network_name}-proxy-only"
-  ip_cidr_range = var.proxy_subnet_cidr # Must be /23 or larger; avoid 10.128.0.0/9 in auto mode networks
-  region        = var.region
-  network       = google_compute_network.vpc_network.id
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-}
+# resource "google_compute_subnetwork" "proxy_only_subnet" {
+#   name          = "${var.network_name}-proxy-only"
+#   ip_cidr_range = var.proxy_subnet_cidr # Must be /23 or larger; avoid 10.128.0.0/9 in auto mode networks
+#   region        = var.region
+#   network       = google_compute_network.vpc_network.id
+#   purpose       = "REGIONAL_MANAGED_PROXY"
+#   role          = "ACTIVE"
+# }
 
 // Static IP address for regional external Gateway
 resource "google_compute_address" "gateway_external_ip" {
