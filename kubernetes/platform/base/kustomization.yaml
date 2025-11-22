@@ -14,7 +14,6 @@ resources:
   - envoy-gateway-system-app.yaml
   - external-gateway.yaml
 
-  - platform-appset.yaml
 
 
   # - oauth-gateway.yaml
@@ -25,6 +24,7 @@ resources:
   # - prometheus.yaml
   # - opentelemetry-collector.yaml
   
-  # - dbqo-system-app.yaml
-  # - apps-appproject.yaml
+  - dbqo-system-app.yaml
+  - platform-appset.yaml
+  - apps-appproject.yaml
   # - apps-appset.yaml

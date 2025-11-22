@@ -45,7 +45,4 @@ stripe:
       product_id: "prod_T01up7wLDULGB1"
 
 db-query-operator:
-  enabled: true
-  crds:
-    enabled: true
-  gvkPattern: "argoproj.io/v1alpha1/Application;v1/ConfigMap"
+  enabled: false
