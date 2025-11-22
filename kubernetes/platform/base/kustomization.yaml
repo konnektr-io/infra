@@ -27,4 +27,4 @@ resources:
   - dbqo-system-app.yaml
   - platform-appset.yaml
   - apps-appproject.yaml
-  # - apps-appset.yaml
+  - apps-appset.yaml
