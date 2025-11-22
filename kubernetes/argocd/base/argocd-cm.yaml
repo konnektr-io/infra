@@ -8,12 +8,15 @@ data:
   kustomize.buildOptions: --enable-helm
   application.namespaces: "*"
   application.resourceTrackingMethod: annotation
+  applicationsetcontroller.enable.new.git.file.globbing: "true"
   url: https://argocd.konnektr.io
   # timeout.reconciliation: 24h # Polling frequency (reduced since webhooks handle most updates)
   # timeout.reconciliation.jitter: 1h # Add some jitter to avoid thundering herd
   # Webhook configuration
   webhook.github.secret: $webhook.github.secret
   exec.enabled: "true"
+  admin.enabled: "true"
+  accounts.admin: apiKey, login
   oidc.config: |
     name: Auth0
     issuer: https://auth.konnektr.io/ 
@@ -25,13 +28,3 @@ data:
         essential: true
     claimsMapping:
       groups: https://konnektr.io/groups
-  policy.default: role:none
-  policy.csv: |
-    p, role:admin, applications, *, */*, allow
-    p, role:admin, clusters, *, *, allow
-    p, role:admin, repositories, *, *, allow
-    p, role:developer, applications, get, */*, allow
-    p, role:developer, applications, sync, */*, allow
-    p, role:developer, repositories, get, *, allow
-    g, konnektr-admins, role:admin
-    g, konnektr-developers, role:developer

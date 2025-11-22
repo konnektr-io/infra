@@ -10,6 +10,8 @@ resources:
   - argocd-server-httproute.yaml
   - auth0-external-secret.yaml
   # - github-webhook-external-secret.yaml
+  - argocd-application-rbac.yaml
+  - argocd-server-application-controller-rbac.yaml
 
 patches:
   - path: argocd-cm.yaml

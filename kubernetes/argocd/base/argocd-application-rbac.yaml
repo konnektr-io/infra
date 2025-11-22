@@ -1,0 +1,30 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argocd-application-role
+  namespace: argocd
+rules:
+  - apiGroups:
+      - "argoproj.io"
+    resources:
+      - applications
+    verbs:
+      - create
+      - delete
+      - get
+      - watch
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argocd-application-role-binding
+  namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-application-role
+subjects:
+  - kind: ServiceAccount
+    name: dt-sa
+    namespace: digitaltwins
