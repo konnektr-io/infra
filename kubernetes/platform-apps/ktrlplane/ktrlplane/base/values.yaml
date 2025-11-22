@@ -7,6 +7,12 @@ database:
   enabled: false
   useExternalSecret: true
   externalSecretName: "ktrlplane-app"
+  secretKeys:
+    host: host
+    port: port
+    db: dbname
+    user: user
+    password: password
 
 ingress:
   enabled: false
