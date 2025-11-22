@@ -5,7 +5,7 @@ resources:
   - cluster.yaml
   - httproute.yaml
   - stripe-external-secret.yaml
-  - namespace-dbqr.yam
+  - namespace-dbqr.yaml
   - appproject-dbqr.yaml
 
 helmCharts:
