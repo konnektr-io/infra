@@ -41,12 +41,12 @@ if (-not $SkipExternalSecrets) {
         --namespace external-secrets `
         --create-namespace `
         --version 0.x `
-        --set nodeSelector."cloud\.google\.com/gke-spot"="true" `
-        --set terminationGracePeriodSeconds=15 `
-        --set webhook.nodeSelector."cloud\.google\.com/gke-spot"="true" `
-        --set webhook.terminationGracePeriodSeconds=15 `
-        --set certController.nodeSelector."cloud\.google\.com/gke-spot"="true" `
-        --set certController.terminationGracePeriodSeconds=15 `
+        # --set nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        # --set terminationGracePeriodSeconds=15 `
+        # --set webhook.nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        # --set webhook.terminationGracePeriodSeconds=15 `
+        # --set certController.nodeSelector."cloud\.google\.com/gke-spot"="true" `
+        # --set certController.terminationGracePeriodSeconds=15 `
         --wait
     
     Write-Host "✓ External Secrets Operator installed" -ForegroundColor Green
