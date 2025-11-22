@@ -24,9 +24,8 @@ data:
     issuer: https://auth.konnektr.io/ 
     clientID: 90TsN4J1Y1KQ1NWgy8PJjKp3mx7lH6Ig  
     clientSecret: $oidc.auth0.clientSecret
-    requestedScopes: [openid, profile, email, groups]
-    requestedIDTokenClaims:
-      groups:
-        essential: true
-    claimsMapping:
-      groups: https://konnektr.io/groups
+    requestedScopes: 
+      - openid
+      - profile
+      - email
+      - https://konnektr.io/groups

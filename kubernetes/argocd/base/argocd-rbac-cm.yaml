@@ -4,7 +4,7 @@ metadata:
   name: argocd-rbac-cm
 data:
   url: https://argocd.konnektr.io
-  scopes: "[groups, email]"
+  scopes: "[https://konnektr.io/groups, email]"
   policy.default: role:none
   policy.csv: |
     p, role:readonly, applications, get, */*, allow
