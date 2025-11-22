@@ -3,9 +3,9 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - default-approject.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.9/manifests/install.yaml
   - platform-app.yaml
+  - default-approject.yaml
   - argocd-server-httproute.yaml
   - auth0-external-secret.yaml
   # - github-webhook-external-secret.yaml
