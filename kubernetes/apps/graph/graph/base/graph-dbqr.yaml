@@ -39,6 +39,7 @@ spec:
               fullnameOverride: {{ .Row.resource_id | lower }}
               cluster:
                 instances: 1
+                enablePDB: false
                 affinity:
                   nodeSelector:
                     cloud.google.com/gke-spot: "true"

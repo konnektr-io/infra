@@ -5,6 +5,8 @@ metadata:
 spec:
   instances: 2
 
+  enablePDB: false
+
   affinity:
     nodeSelector:
       cloud.google.com/gke-spot: "true"

@@ -20,7 +20,7 @@ spec:
           - name: frontend
             image: ghcr.io/konnektr-io/graph-explorer-frontend:0.0.5
             ports:
-              - containerPort: 80
+              - containerPort: 8080
             resources:
               requests:
                 cpu: 50m
