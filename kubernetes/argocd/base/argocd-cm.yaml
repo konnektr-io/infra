@@ -19,7 +19,7 @@ data:
   exec.enabled: "true"
   admin.enabled: "false"
   oidc.config: |
-    name: Auth0
+    name: Konnektr
     issuer: https://auth.konnektr.io/ 
     clientID: 90TsN4J1Y1KQ1NWgy8PJjKp3mx7lH6Ig  
     clientSecret: $oidc.auth0.clientSecret
