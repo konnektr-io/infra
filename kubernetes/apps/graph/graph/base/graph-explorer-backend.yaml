@@ -18,7 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: backend
-          image: ghcr.io/konnektr-io/graph-explorer-proxy-backend:0.0.7
+          image: ghcr.io/konnektr-io/graph-explorer-proxy-backend:0.0.8
           ports:
             - containerPort: 8080
           resources:
