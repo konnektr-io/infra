@@ -18,9 +18,9 @@ spec:
           cloud.google.com/gke-spot: "true"
         containers:
           - name: frontend
-            image: ghcr.io/konnektr-io/graph-explorer-frontend:0.0.5
+            image: ghcr.io/konnektr-io/graph-explorer-frontend:0.0.6
             ports:
-              - containerPort: 8080
+              - containerPort: 80
             resources:
               requests:
                 cpu: 50m
@@ -31,13 +31,13 @@ spec:
             readinessProbe:
               httpGet:
                 path: /
-                port: 8080
+                port: 80
               initialDelaySeconds: 5
               periodSeconds: 10
             livenessProbe:
               httpGet:
                 path: /
-                port: 8080
+                port: 80
               initialDelaySeconds: 10
               periodSeconds: 20
 ---
