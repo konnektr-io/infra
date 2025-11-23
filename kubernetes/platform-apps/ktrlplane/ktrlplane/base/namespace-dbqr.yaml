@@ -2,13 +2,9 @@ apiVersion: konnektr.io/v1alpha1
 kind: DatabaseQueryResource
 metadata:
   name: namespace-dbqr
-  finalizers:
-    - konnektr.io/databasequeryresource-finalizer
 spec:
   # How often to query the database and reconcile
   pollInterval: "5m"
-  # Whether to delete resources if their corresponding DB row disappears (default: true)
-  prune: true
   database:
     type: postgres
     connectionSecretRef:
