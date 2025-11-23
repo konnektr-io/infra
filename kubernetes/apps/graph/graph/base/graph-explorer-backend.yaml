@@ -14,6 +14,8 @@ spec:
       labels:
         app: graph-explorer-backend
     spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
       containers:
         - name: backend
           image: ghcr.io/konnektr-io/graph-explorer-proxy-backend:0.0.5
