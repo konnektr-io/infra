@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
   - appproject.yaml
   - graph-dbqr.yaml
+  - graph-explorer-frontend.yaml
+  - graph-explorer-backend.yaml
+  - graph-explorer-httproute.yaml

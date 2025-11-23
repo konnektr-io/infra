@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graph-explorer-frontend
+  labels:
+    app: graph-explorer-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graph-explorer-frontend
+  template:
+    metadata:
+      labels:
+        app: graph-explorer-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/konnektr-io/graph-explorer-frontend:0.0.5
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: graph-explorer-frontend
+  labels:
+    app: graph-explorer-frontend
+spec:
+  selector:
+    app: graph-explorer-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
