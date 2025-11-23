@@ -29,7 +29,7 @@ spec:
       source:
         repoURL: oci://ghcr.io/konnektr-io/charts/graph
         path: .
-        targetRevision: 0.3.5
+        targetRevision: 0.4.0
         helm:
           valuesObject:
             fullnameOverride: {{ .Row.resource_id | lower }}
@@ -47,9 +47,14 @@ spec:
                     memory: 2Gi
                   requests:
                     cpu: 50m
-                    memory: 1000Mi
+                    memory: 500Mi
             api:
               enabled: true
+              httproute:
+                enabled: true
+                gatewayName: external
+                gatewayNamespace: platform
+                host: {{ .Row.resource_id | lower }}.api.graph.konnektr.io
               # Spot node configuration for API
               nodeSelector:
                 cloud.google.com/gke-spot: "true"
