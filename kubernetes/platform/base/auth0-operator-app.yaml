@@ -19,6 +19,7 @@ spec:
         operator:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
+          affinity: {}
   syncPolicy:
     automated:
       prune: true
