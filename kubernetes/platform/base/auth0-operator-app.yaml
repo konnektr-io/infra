@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dbqo-system
+  name: auth0-operator
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: dbqo-system
+    namespace: auth0-operator
     server: https://kubernetes.default.svc
   project: platform
   source:
