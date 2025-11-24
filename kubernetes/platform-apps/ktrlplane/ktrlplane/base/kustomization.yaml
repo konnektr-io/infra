@@ -6,6 +6,8 @@ resources:
   - httproute.yaml
   - stripe-external-secret.yaml
   - namespace-dbqr.yaml
+  - auth0-tenant.yaml
+  - auth0-client-dbqr.yaml
 
 helmCharts:
   - name: ktrlplane

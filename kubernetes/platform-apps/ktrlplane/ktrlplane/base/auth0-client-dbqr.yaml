@@ -1,0 +1,31 @@
+apiVersion: konnektr.io/v1alpha1
+kind: DatabaseQueryResource
+metadata:
+  name: auth0-client-dbqr
+spec:
+  pollInterval: "5m"
+  database:
+    type: postgres
+    connectionSecretRef:
+      name: ktrlplane-app
+      uriKey: uri
+  query: "SELECT project_id, org_id FROM ktrlplane.projects;"
+  template: |
+    apiVersion: kubernetes.auth0.com/v1
+    kind: Client
+    metadata:
+      name: {{ .Row.project_id | lower }}
+      namespace: ktrlplane
+      labels:
+        konnektr.io/project-id: {{ .Row.project_id | lower }}
+        konnektr.io/org-id: {{ .Row.org_id | lower }}
+    spec:
+      tenantRef:
+        name: konnektr-tenant
+      secretRef:
+        name: {{ .Row.project_id | lower }}
+      conf:
+        name: {{ .Row.project_id | lower }}
+        app_type: machine_to_machine
+        grant_types:
+          - client_credentials
