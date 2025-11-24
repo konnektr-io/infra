@@ -22,7 +22,8 @@ spec:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
           affinity: 
-            podAntiAffinity: null
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution: []
   syncPolicy:
     automated:
       prune: true
