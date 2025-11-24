@@ -16,7 +16,7 @@ spec:
     path: .
     helm:
       valuesObject:
-        gvkPattern: "argoproj.io/v1alpha1/Application;argoproj.io/v1alpha1/AppProject;v1/Namespace"
+        gvkPattern: "argoproj.io/v1alpha1/Application;argoproj.io/v1alpha1/AppProject;v1/Namespace;kubernetes.auth0.com/v1/Client;kubernetes.auth0.com/v1/ClientGrant"
         nodeSelector:
           cloud.google.com/gke-spot: "true"
   syncPolicy:
