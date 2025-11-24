@@ -6,6 +6,7 @@ resources:
 helmCharts:
   - name: auth0-operator
     releaseName: auth0-operator
+    valuesFile: values.yaml
     repo: oci://ghcr.io/alethic/auth0-operator
-    version: ">=1.3.0"
-    namespace: platform
+    version: 1.3.4
+    namespace: auth0-operator
