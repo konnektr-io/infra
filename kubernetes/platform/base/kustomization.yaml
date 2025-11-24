@@ -19,10 +19,6 @@ resources:
   - apps-appproject.yaml
   - apps-appset.yaml
 
-  - auth0-operator-app.yaml
-  - auth0-operator-external-secret.yaml
-  - auth0-tenant.yaml
-
 
   # - oauth-gateway.yaml
   # - global-auth0-security-policy.yaml
