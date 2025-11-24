@@ -3,18 +3,3 @@ kind: Kustomization
 
 resources:
   - ../../base
-
-patches:
-  # Patch CNPG operator deployment for spot nodes
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: cnpg-controller-manager
-        namespace: cnpg-system
-      spec:
-        template:
-          spec:
-            nodeSelector:
-              cloud.google.com/gke-spot: "true"
-            terminationGracePeriodSeconds: 15
