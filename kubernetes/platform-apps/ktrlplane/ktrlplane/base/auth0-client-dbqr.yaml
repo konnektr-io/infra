@@ -24,6 +24,6 @@ spec:
         name: konnektr-tenant
       conf:
         name: {{ .Row.project_id | lower }}
-        app_type: machine_to_machine
+        app_type: m2m
         grant_types:
           - client_credentials
