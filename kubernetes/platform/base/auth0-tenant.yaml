@@ -2,7 +2,6 @@ apiVersion: kubernetes.auth0.com/v1
 kind: Tenant
 metadata:
   name: konnektr-tenant
-  namespace: ktrlplane
 spec:
   auth:
     domain: dev-zv5urb33g0msy7bc.eu.auth0.com

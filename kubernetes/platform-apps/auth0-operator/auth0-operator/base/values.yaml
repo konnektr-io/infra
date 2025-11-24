@@ -1,3 +1,0 @@
-operator:
-  nodeSelector:
-    cloud.google.com/gke-spot: "true"
