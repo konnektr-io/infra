@@ -17,6 +17,8 @@ spec:
     helm:
       valuesObject:
         operator:
+          image:
+            tag: 1.3.4
           nodeSelector:
             cloud.google.com/gke-spot: "true"
           affinity: {}
