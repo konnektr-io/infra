@@ -3,7 +3,10 @@ kind: Tenant
 metadata:
   name: konnektr-tenant
 spec:
+  name: dev-zv5urb33g0msy7bc
   auth:
     domain: dev-zv5urb33g0msy7bc.eu.auth0.com
     secretRef:
       name: auth0-operator-credentials
+  conf:
+    friendly_name: Konnektr
