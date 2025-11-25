@@ -18,6 +18,13 @@ spec:
       valuesObject:
         nodeSelector:
           cloud.google.com/gke-spot: "true"
+        resources: 
+          requests:
+            memory: "300Mi"
+            cpu: "5m"
+          limits:
+            memory: "600Mi"
+            cpu: "100m"
         terminationGracePeriodSeconds: 15
   syncPolicy:
     automated: {}

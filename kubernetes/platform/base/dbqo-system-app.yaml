@@ -19,6 +19,13 @@ spec:
         gvkPattern: "argoproj.io/v1alpha1/Application;argoproj.io/v1alpha1/AppProject;v1/Namespace;kubernetes.auth0.com/v1/Client;kubernetes.auth0.com/v1/ClientGrant"
         nodeSelector:
           cloud.google.com/gke-spot: "true"
+        resources: 
+          requests:
+            memory: "300Mi"
+            cpu: "5m"
+          limits:
+            memory: "600Mi"
+            cpu: "100m"
   syncPolicy:
     automated:
       prune: true

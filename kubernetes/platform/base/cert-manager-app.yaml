@@ -25,15 +25,43 @@ spec:
           enableGatewayAPI: true
         nodeSelector:
           cloud.google.com/gke-spot: "true"
+        resources: 
+          requests:
+            memory: "300Mi"
+            cpu: "5m"
+          limits:
+            memory: "600Mi"
+            cpu: "100m"
         webhook:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
+          resources: 
+            requests:
+              memory: "300Mi"
+              cpu: "5m"
+            limits:
+              memory: "600Mi"
+              cpu: "100m"
         cainjector:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
+          resources: 
+            requests:
+              memory: "300Mi"
+              cpu: "5m"
+            limits:
+              memory: "600Mi"
+              cpu: "100m"
         startupapicheck:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
+          resources: 
+            requests:
+              memory: "300Mi"
+              cpu: "5m"
+            limits:
+              memory: "600Mi"
+              cpu: "100m"
         global:
           leaderElection:
             namespace: cert-manager

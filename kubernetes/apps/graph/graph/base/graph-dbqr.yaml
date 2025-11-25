@@ -39,6 +39,13 @@ spec:
               fullnameOverride: {{ .Row.resource_id | lower }}
               cluster:
                 instances: 1
+                resources:
+                  requests:
+                    memory: "1Gi"
+                    cpu: "50m"
+                  limits:
+                    memory: "2Gi"
+                    cpu: "1"
                 enablePDB: false
                 affinity:
                   nodeSelector:
@@ -66,7 +73,7 @@ spec:
                   cpu: "1"
                   memory: 1Gi
                 requests:
-                  cpu: 50m
+                  cpu: 20m
                   memory: 250Mi
             events:
               enabled: false
