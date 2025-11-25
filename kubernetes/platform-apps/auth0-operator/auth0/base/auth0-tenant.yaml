@@ -10,3 +10,4 @@ spec:
       name: auth0-operator-credentials
   conf:
     friendly_name: Konnektr
+    flags: {}
