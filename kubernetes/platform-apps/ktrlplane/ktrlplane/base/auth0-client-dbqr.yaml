@@ -15,13 +15,13 @@ spec:
     kind: Client
     metadata:
       name: {{ .Row.project_id | lower }}
-      namespace: ktrlplane
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
         konnektr.io/org-id: {{ .Row.org_id | lower }}
     spec:
       tenantRef:
         name: konnektr-tenant
+        namespace: auth0-operator
       conf:
         name: {{ .Row.project_id | lower }}
         app_type: non_interactive
