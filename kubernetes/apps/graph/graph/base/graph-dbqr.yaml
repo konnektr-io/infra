@@ -19,7 +19,7 @@ spec:
     timestampColumn: "updated_at"         # Column tracking modifications
     changePollInterval: "10s"             # Check for changes every 10 seconds
   # The SQL query to execute
-  query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE type = 'Konnektr.Graph' AND status != 'Deleting';"
+  query: "SELECT resource_id, project_id FROM ktrlplane.resources WHERE type = 'Konnektr.Graph';"
   statusUpdateQueryTemplate: "UPDATE ktrlplane.resources SET status = '{{ .Resource.status.health.status | default \"Unknown\" }}' WHERE resource_id = '{{ .Resource.metadata.name }}';"
   # Go template for the Kubernetes resource(s)
   template: |
