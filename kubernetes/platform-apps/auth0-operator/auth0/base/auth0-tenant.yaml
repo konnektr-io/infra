@@ -9,6 +9,5 @@ spec:
       name: auth0-operator-credentials
   conf:
     friendly_name: Konnektr Tenant
-    flags:
-      enable_sso: false
+    flags: {}
   name: konnektr-tenant
