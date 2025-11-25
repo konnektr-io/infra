@@ -22,6 +22,8 @@ spec:
       tenantRef:
         name: konnektr-tenant
         namespace: auth0-operator
+      secretRef:
+        name: auth0-client-{{ .Row.project_id | lower }}
       conf:
         name: {{ .Row.project_id | lower }}
         app_type: non_interactive
