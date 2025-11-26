@@ -64,11 +64,10 @@ patches:
       name: argocd-server
     patch: |-
       - op: add
-        path: /spec/template/spec/containers/0/resources
+        path: /spec/template/spec/containers/0/resources/requests
         value:
-          requests:
-            cpu: "250m"
-            memory: "500Mi"
+          cpu: "250m"
+          memory: "500Mi"
   - target:
       group: apps
       version: v1
@@ -76,11 +75,10 @@ patches:
       name: argocd-repo-server
     patch: |-
       - op: add
-        path: /spec/template/spec/containers/0/resources
+        path: /spec/template/spec/containers/0/resources/requests
         value:
-          requests:
-            cpu: "250m"
-            memory: "500Mi"
+          cpu: "250m"
+          memory: "500Mi"
   - target:
       group: apps
       version: v1
@@ -88,8 +86,7 @@ patches:
       name: argocd-notifications-controller
     patch: |-
       - op: add
-        path: /spec/template/spec/containers/0/resources
+        path: /spec/template/spec/containers/0/resources/requests
         value:
-          requests:
-            cpu: "250m"
-            memory: "500Mi"
+          cpu: "250m"
+          memory: "500Mi"
