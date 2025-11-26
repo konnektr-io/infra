@@ -64,11 +64,11 @@ patches:
       name: argocd-server
     patch: |-
       - op: add
-        path: /spec/template/spec/containers/0/resources/requests/cpu
-        value: "250m"
-      - op: add
-        path: /spec/template/spec/containers/0/resources/requests/memory
-        value: "500Mi"
+        path: /spec/template/spec/containers/0/resources
+        value: 
+          requests:
+            cpu: "250m"
+            memory: "500Mi"
   # - target:
   #     group: apps
   #     version: v1
