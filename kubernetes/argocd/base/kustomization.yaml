@@ -45,9 +45,6 @@ patches:
       - op: add
         path: /spec/template/spec/terminationGracePeriodSeconds
         value: 25
-      - op: add
-        path: /spec/template/spec/containers/0/resources/requests/cpu
-        value: "250m"
   - target:
       group: apps
       version: v1
