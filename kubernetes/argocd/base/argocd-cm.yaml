@@ -12,8 +12,8 @@ data:
   application.resourceTrackingMethod: annotation
   applicationsetcontroller.enable.new.git.file.globbing: "true"
   url: https://argocd.konnektr.io
-  # timeout.reconciliation: 24h # Polling frequency (reduced since webhooks handle most updates)
-  # timeout.reconciliation.jitter: 1h # Add some jitter to avoid thundering herd
+  timeout.reconciliation: 24h # Polling frequency (reduced since webhooks handle most updates)
+  timeout.reconciliation.jitter: 1h # Add some jitter to avoid thundering herd
   # Webhook configuration
   webhook.github.secret: $webhook.github.secret
   exec.enabled: "true"
@@ -28,3 +28,26 @@ data:
       - profile
       - email
       - https://konnektr.io/groups
+  resource.customizations.health.konnektr.io_DatabaseQueryResource: |
+    hs = {}
+    if obj.status ~= nil then
+      if obj.status.conditions ~= nil then
+        for i, condition in ipairs(obj.status.conditions) do
+          if condition.type == "Reconciled" and condition.status == "False" then
+            hs.status = "Degraded"
+            hs.message = condition.message
+            return hs
+          end
+          if condition.type == "Reconciled" and condition.status == "True" then
+            hs.status = "Healthy"
+            hs.message = condition.message
+          end
+        end
+      end
+      if obj.status.managedResources ~= nil then
+        hs.message = (hs.message or "") .. "\nManaging " .. #obj.status.managedResources .. " resources"
+      end
+    end
+    hs.status = hs.status or "Progressing"
+    hs.message = hs.message or "Waiting for reconciliation"
+    return hs
