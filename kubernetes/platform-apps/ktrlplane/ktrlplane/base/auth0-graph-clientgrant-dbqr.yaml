@@ -15,6 +15,7 @@ spec:
     kind: ClientGrant
     metadata:
       name: {{ .Row.project_id | lower }}-graph-api
+      namespace: {{ .Row.project_id | lower }}
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
         {{- if .Row.org_id }}
