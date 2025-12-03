@@ -1,7 +1,7 @@
 apiVersion: konnektr.io/v1alpha1
 kind: DatabaseQueryResource
 metadata:
-  name: auth0-client-dbqr
+  name: auth0-graph-clientgrant-dbqr
 spec:
   pollInterval: "5m"
   database:
@@ -12,9 +12,9 @@ spec:
   query: "SELECT project_id, org_id FROM ktrlplane.projects;"
   template: |
     apiVersion: kubernetes.auth0.com/v1
-    kind: Client
+    kind: ClientGrant
     metadata:
-      name: {{ .Row.project_id | lower }}
+      name: {{ .Row.project_id | lower }}-graph-api
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
         {{- if .Row.org_id }}
@@ -24,10 +24,9 @@ spec:
       tenantRef:
         name: konnektr-tenant
         namespace: auth0-operator
-      secretRef:
-        name: auth0-client-{{ .Row.project_id | lower }}
       conf:
-        name: {{ .Row.project_id | lower }}
-        app_type: non_interactive
-        grant_types:
-          - client_credentials
+        clientRef:
+          name: {{ .Row.project_id | lower }}
+        audience:
+          name: graph-api
+        scope: []

@@ -21,6 +21,9 @@ spec:
           image: ghcr.io/konnektr-io/graph-explorer-proxy-backend:0.0.8
           ports:
             - containerPort: 8080
+          env:
+            - name: KTRLPLANE_BASE_URL
+              value: "http://ktrlplane-backend-service.ktrlplane.svc.cluster.local/api/v1"
           resources:
             requests:
               cpu: 10m

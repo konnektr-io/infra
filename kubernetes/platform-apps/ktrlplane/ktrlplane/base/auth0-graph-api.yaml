@@ -1,0 +1,17 @@
+apiVersion: kubernetes.auth0.com/v1
+kind: ResourceServer
+metadata:
+  name: graph-api
+spec:
+  tenantRef:
+    name: konnektr-tenant
+    namespace: auth0-operator
+  conf:
+    identifier: https://graph.konnektr.io
+    name: Konnektr Graph
+    allow_offline_access: false
+    skip_consent_for_verifiable_first_party_clients: true
+    token_lifetime: 86400
+    token_lifetime_for_web: 7200
+    signing_alg: RS256
+    token_dialect: access_token
