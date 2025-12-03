@@ -9,6 +9,7 @@ resources:
   - auth0-client-dbqr.yaml
   - auth0-graph-api.yaml
   - auth0-graph-clientgrant-dbqr.yaml
+  - rbac.yaml
 
 helmCharts:
   - name: ktrlplane
