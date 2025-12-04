@@ -14,8 +14,8 @@ database:
     user: user
     password: password
 
-ingress:
-  enabled: false
+httproute:
+  enabled: true
 
 frontend:
   nodeSelector:

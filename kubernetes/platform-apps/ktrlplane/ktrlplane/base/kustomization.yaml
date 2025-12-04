@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - cluster.yaml
-  - httproute.yaml
   - stripe-external-secret.yaml
   - namespace-dbqr.yaml
   - auth0-client-dbqr.yaml
@@ -16,5 +15,5 @@ helmCharts:
     releaseName: ktrlplane
     valuesFile: values.yaml
     repo: https://charts.konnektr.io
-    version: 0.3.34
+    version: 0.3.36
     namespace: ktrlplane
