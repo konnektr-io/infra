@@ -44,6 +44,7 @@ spec:
               fullnameOverride: {{ .Row.resource_id | lower }}
               cluster:
                 instances: 1
+                logLevel: warning
                 resources:
                   requests:
                     memory: "500Mi"
