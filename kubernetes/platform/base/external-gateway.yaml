@@ -49,6 +49,18 @@ spec:
         certificateRefs:
           - kind: Secret
             name: ktrlplane-tls
+    - name: graph-api-https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.api.graph.konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: graph-api-tls
     - name: graph-https
       protocol: HTTPS
       port: 443
