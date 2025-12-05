@@ -30,6 +30,8 @@ spec:
       max_parallel_workers: "8"
       max_parallel_maintenance_workers: "2"
 
+  logLevel: warning
+
   resources:
     requests:
       memory: "1Gi"
