@@ -20,4 +20,6 @@ spec:
       name: {{ .Row.project_id | lower }}
       labels:
         konnektr.io/project-id: {{ .Row.project_id | lower }}
+        {{- if .Row.org_id }}
         konnektr.io/org-id: {{ .Row.org_id | lower }}
+        {{- end }}
