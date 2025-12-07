@@ -9,7 +9,21 @@ spec:
     connectionSecretRef:
       name: ktrlplane-app
       uriKey: uri
-  query: "SELECT project_id, org_id FROM ktrlplane.projects;"
+  query: |
+    SELECT DISTINCT p.project_id, p.org_id
+    FROM ktrlplane.projects p
+    INNER JOIN ktrlplane.billing_accounts ba 
+      ON ba.scope_type = 'project' AND ba.scope_id = p.project_id
+    INNER JOIN ktrlplane.resources r 
+      ON r.project_id = p.project_id
+    WHERE 
+      -- Must have a billing account with Stripe customer (payment details)
+      ba.stripe_customer_id IS NOT NULL
+      -- Must have an active subscription
+      AND ba.stripe_subscription_id IS NOT NULL
+      -- Must have at least one non-free resource
+      AND r.sku IS NOT NULL 
+      AND r.sku != 'free';
   template: |
     apiVersion: kubernetes.auth0.com/v1
     kind: ClientGrant
