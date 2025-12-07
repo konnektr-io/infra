@@ -47,7 +47,7 @@ spec:
             - name: DB_TYPE
               value: "postgresdb"
             - name: DB_POSTGRESDB_HOST
-              value: "n8n-rw"
+              value: "n8n-postgresql-rw"
             - name: DB_POSTGRESDB_DATABASE
               value: "app"
             - name: DB_POSTGRESDB_USER
