@@ -35,7 +35,7 @@ spec:
       source:
         repoURL: oci://ghcr.io/konnektr-io/charts/graph
         path: .
-        targetRevision: 0.4.4
+        targetRevision: 0.4.5
         helm:
           valuesObject:
             fullnameOverride: {{ .Row.resource_id | lower }}
@@ -74,6 +74,9 @@ spec:
                 requests:
                   cpu: 20m
                   memory: 250Mi
+              config:
+                authentication:
+                  enabled: true
             events:
               enabled: false
       destination:
