@@ -53,12 +53,12 @@ spec:
             - name: DB_POSTGRESDB_USER
               valueFrom:
                 secretKeyRef:
-                  name: n8n-app
+                  name: n8n-postgresql-app
                   key: username
             - name: DB_POSTGRESDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: n8n-app
+                  name: n8n-postgresql-app
                   key: password
           ports:
             - containerPort: 5678
