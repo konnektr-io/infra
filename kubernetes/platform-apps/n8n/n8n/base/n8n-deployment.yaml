@@ -30,6 +30,8 @@ spec:
             - -c
             - sleep 5; n8n start
           env:
+            - name: N8N_EXPRESS_TRUST_PROXY
+              value: "true"
             - name: N8N_BASIC_AUTH_ACTIVE
               value: "true"
             - name: N8N_BASIC_AUTH_USER
