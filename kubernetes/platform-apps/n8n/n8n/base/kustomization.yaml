@@ -7,3 +7,4 @@ resources:
   - n8n-httproute.yaml
   - n8n-external-secret.yaml
   - n8n-cluster.yaml
+  - n8n-pvc.yaml

@@ -12,6 +12,8 @@ spec:
       labels:
         app: n8n
     spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
       containers:
         - name: n8n
           image: n8nio/n8n:latest
