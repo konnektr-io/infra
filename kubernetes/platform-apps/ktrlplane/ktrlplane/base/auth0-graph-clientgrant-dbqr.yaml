@@ -25,6 +25,10 @@ spec:
       tenantRef:
         name: konnektr-tenant
         namespace: auth0-operator
+      policy:
+        - Create
+        - Update
+        - Delete
       conf:
         clientRef:
           name: {{ .Row.project_id | lower }}
