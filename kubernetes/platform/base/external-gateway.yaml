@@ -73,6 +73,18 @@ spec:
         certificateRefs:
           - kind: Secret
             name: graph-tls
+    - name: n8n-https
+      protocol: HTTPS
+      port: 443
+      hostname: "n8n.konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: n8n-tls
 # ---
 # apiVersion: gateway.networking.k8s.io/v1
 # kind: HTTPRoute

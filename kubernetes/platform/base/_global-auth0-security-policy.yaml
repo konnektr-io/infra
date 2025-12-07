@@ -6,7 +6,7 @@ metadata:
 spec:
   # Use label selector instead of targetRefs to apply to multiple gateways
   targetSelectors:
-    - kind: Gateway
+    - kind: HTTPRoute
       matchLabels:
         auth.konnektr.io/enabled: "true"
   oidc:

@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: ktrlplane
+  name: n8n
 spec:
   instances: 2
 
@@ -30,20 +30,15 @@ spec:
       max_parallel_workers: "8"
       max_parallel_maintenance_workers: "2"
 
-  logLevel: warning
-
   resources:
     requests:
       memory: "1Gi"
-      cpu: "200m"
+      cpu: "100m"
     limits:
       memory: "2Gi"
       cpu: "1"
 
   storage:
-    size: 32Gi
-
-  walStorage:
     size: 32Gi
 
   monitoring:
