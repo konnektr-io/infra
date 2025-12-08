@@ -18,7 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: frontend
-          image: ghcr.io/konnektr-io/graph-explorer-frontend:0.0.28
+          image: ghcr.io/konnektr-io/graph-explorer-frontend:0.0.29
           ports:
             - containerPort: 80
           resources:
