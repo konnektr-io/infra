@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - graph/graph/overlays/prd
+  - n8n/_n8n/overlays/prd
+  - docs/docs/overlays/prd
+  - home/home/overlays/prd

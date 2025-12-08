@@ -16,6 +16,18 @@ spec:
     #   port: 80
     #   protocol: HTTP
     #   hostname: "*.konnektr.io"
+    - name: dev-https
+      protocol: HTTPS
+      hostname: "*.dev.konnektr.io"
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: dev-tls
     - name: argocd-https
       protocol: HTTPS
       hostname: argocd.konnektr.io

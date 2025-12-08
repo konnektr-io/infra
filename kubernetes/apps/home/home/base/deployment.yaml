@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home
+  labels:
+    app: home
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: home
+  template:
+    metadata:
+      labels:
+        app: home
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      containers:
+        - name: home
+          image: ghcr.io/konnektr-io/home:pr-5
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MAILERLITE_GROUP_WAITINGLIST
+              value: "166521313277511624"
+            - name: MAILERLITE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: mailerlite-api-token
+                  key: MAILERLITE_API_TOKEN
+            - name: MAILERLITE_GROUP_WAITINGLIST_GRAPH
+              value: "166521313277511624"
+            - name: MAILERLITE_GROUP_WAITINGLIST_ASSEMBLER
+              value: "167402249963701869"
+            - name: MAILERLITE_GROUP_WAITINGLIST_FLOW
+              value: "167402262008693765"
+            - name: MAILERLITE_GROUP_WAITINGLIST_COMPASS
+              value: "167402286845265177"
+            - name: MAILERLITE_GROUP_WAITINGLIST_REQUESTDEMO
+              value: "167402387241174057"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
