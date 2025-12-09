@@ -11,9 +11,8 @@ spec:
       name: external
       namespace: platform
   hostnames:
-    - home.dev.konnektr.io
-    # - konnektr.io
-    # - www.konnektr.io
+    - konnektr.io
+    - www.konnektr.io
   rules:
     - matches:
         - path:

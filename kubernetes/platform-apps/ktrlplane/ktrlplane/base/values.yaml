@@ -33,16 +33,10 @@ stripe:
   products:
     - resource_type: "Konnektr.Graph"
       sku: "free"
-      product_id: "prod_T01txFyd6dfzao"
+      product_id: "prod_TZgQnSI63Z4aKc"
     - resource_type: "Konnektr.Graph"
       sku: "standard"
-      product_id: "prod_SzztLZsKSYqiVz"
-    - resource_type: "Konnektr.Flow"
-      sku: "free"
-      product_id: "prod_T0n3Z04EIgDZcT"
-    - resource_type: "Konnektr.Flow"
-      sku: "standard"
-      product_id: "prod_T01up7wLDULGB1"
+      product_id: "prod_TTFdx010Hv2Qg4"
 
 db-query-operator:
   enabled: false

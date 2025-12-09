@@ -11,6 +11,30 @@ spec:
     - name: http
       port: 80
       protocol: HTTP
+    - name: root-https
+      protocol: HTTPS
+      port: 443
+      hostname: "konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: root-tls
+    - name: home-https
+      protocol: HTTPS
+      port: 443
+      hostname: "www.konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: www-tls
     - name: docs-https
       protocol: HTTPS
       port: 443
