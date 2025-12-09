@@ -35,7 +35,7 @@ spec:
       source:
         repoURL: oci://ghcr.io/konnektr-io/charts/graph
         path: .
-        targetRevision: 0.4.5
+        targetRevision: 0.4.7
         helm:
           valuesObject:
             fullnameOverride: {{ .Row.resource_id | lower }}
@@ -59,7 +59,6 @@ spec:
                     
             api:
               enabled: true
-              imageName: ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.18.0-preview.2
               httproute:
                 enabled: true
                 gatewayName: external
@@ -78,8 +77,6 @@ spec:
                   memory: 250Mi
               config:
                 authentication:
-                  enabled: true
-                authorization:
                   enabled: true
                 parameters:
                   {{- if eq .Row.sku "free" -}}
