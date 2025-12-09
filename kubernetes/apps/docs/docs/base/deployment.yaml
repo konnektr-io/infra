@@ -18,8 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: docs
-          image: ghcr.io/konnektr-io/docs:pr-26
-          imagePullPolicy: Always # remove once we move to production
+          image: ghcr.io/konnektr-io/docs:0.1.0
           env:
             - name: PORT
               value: "8080"
