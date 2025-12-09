@@ -11,8 +11,7 @@ spec:
       name: external
       namespace: platform
   hostnames:
-    - docs.dev.konnektr.io
-    # - docs.konnektr.io
+    - docs.konnektr.io
   rules:
     - matches:
         - path:
