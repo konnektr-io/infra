@@ -85,6 +85,9 @@ spec:
                   {{- if eq .Row.sku "free" -}}
                   rateLimitingEnabled: true
                   {{- end }}
+              extraEnv:
+                - name: Parameters__Authorization__Api__
+                  value: "{{ .Row.project_id | lower }}"
 
             events:
               enabled: false
