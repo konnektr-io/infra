@@ -59,6 +59,7 @@ spec:
                     
             api:
               enabled: true
+              imageName: ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:docker pull ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.18.0-preview.1
               httproute:
                 enabled: true
                 gatewayName: external
@@ -77,6 +78,8 @@ spec:
                   memory: 250Mi
               config:
                 authentication:
+                  enabled: true
+                authorization:
                   enabled: true
                 parameters:
                   {{- if eq .Row.sku "free" -}}
