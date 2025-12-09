@@ -18,7 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: home
-          image: ghcr.io/konnektr-io/home:0.1.4
+          image: ghcr.io/konnektr-io/home:0.1.5
           imagePullPolicy: Always # remove once we move to production
           ports:
             - containerPort: 8080
