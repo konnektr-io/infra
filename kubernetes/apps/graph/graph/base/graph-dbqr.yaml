@@ -35,7 +35,7 @@ spec:
       source:
         repoURL: oci://ghcr.io/konnektr-io/charts/graph
         path: .
-        targetRevision: 0.4.7
+        targetRevision: 0.4.8
         helm:
           valuesObject:
             fullnameOverride: {{ .Row.resource_id | lower }}
@@ -83,8 +83,20 @@ spec:
                   rateLimitingEnabled: true
                   {{- end }}
               extraEnv:
-                - name: Parameters__Authorization__Api__
-                  value: "{{ .Row.project_id | lower }}"
+                - name: Parameters__Authorization__Api__TokenEndpoint
+                  value: https://auth.konnektr.io/oauth/token
+                - name: Parameters__Authorization__Api__Audience
+                  value: https://ktrlplane.konnektr.io
+                - name: Parameters__Authorization__Api__ClientId
+                  valueFrom:
+                    secretKeyRef:
+                      name: auth0-secret
+                      key: clientId
+                - name: Parameters__Authorization__Api__ClientSecret
+                  valueFrom:
+                    secretKeyRef:
+                      name: auth0-secret
+                      key: clientSecret
 
             events:
               enabled: false
