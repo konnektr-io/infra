@@ -59,7 +59,7 @@ spec:
                     
             api:
               enabled: true
-              imageName: ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.18.0-preview.1
+              imageName: ghcr.io/konnektr-io/pg-age-digitaltwins/agedigitaltwins-api:1.18.0-preview.2
               httproute:
                 enabled: true
                 gatewayName: external
