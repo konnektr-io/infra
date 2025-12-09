@@ -24,11 +24,6 @@ spec:
           env:
             - name: MAILERLITE_GROUP_WAITINGLIST
               value: "166521313277511624"
-            - name: MAILERLITE_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: home-external-secret
-                  key: MAILERLITE_API_TOKEN
             - name: MAILERLITE_GROUP_WAITINGLIST_GRAPH
               value: "166521313277511624"
             - name: MAILERLITE_GROUP_WAITINGLIST_ASSEMBLER
@@ -41,7 +36,7 @@ spec:
               value: "167402387241174057"
           envFrom:
             - secretRef:
-                name: home-external-secret
+                name: home-secret
           resources:
             requests:
               cpu: 50m
