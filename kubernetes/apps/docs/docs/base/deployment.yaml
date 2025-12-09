@@ -19,6 +19,7 @@ spec:
       containers:
         - name: docs
           image: ghcr.io/konnektr-io/docs:pr-26
+          imagePullPolicy: Always # remove once we move to production
           env:
             - name: PORT
               value: "8080"
