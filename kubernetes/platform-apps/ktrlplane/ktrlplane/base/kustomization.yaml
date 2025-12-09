@@ -5,6 +5,7 @@ resources:
   - cluster.yaml
   - stripe-external-secret.yaml
   - namespace-dbqr.yaml
+  - auth0-secret-dbqr.yaml
   - auth0-client-dbqr.yaml
   - auth0-graph-api.yaml
   - auth0-graph-clientgrant-dbqr.yaml
