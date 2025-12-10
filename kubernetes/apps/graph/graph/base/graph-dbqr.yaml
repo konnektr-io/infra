@@ -75,6 +75,7 @@ spec:
                 requests:
                   cpu: 50m
                   memory: 250Mi
+              logLevel: Information
               config:
                 authentication:
                   enabled: true
