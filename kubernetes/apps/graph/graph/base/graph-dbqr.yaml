@@ -79,6 +79,8 @@ spec:
               config:
                 authentication:
                   enabled: true
+                openApi:
+                  enabled: true
                 parameters:
                   {{- if eq .Row.sku "free" -}}
                   rateLimitingEnabled: true
