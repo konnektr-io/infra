@@ -16,5 +16,5 @@ helmCharts:
     releaseName: ktrlplane
     valuesFile: values.yaml
     repo: https://charts.konnektr.io
-    version: 0.3.58
+    version: 0.3.59
     namespace: ktrlplane
