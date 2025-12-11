@@ -92,12 +92,12 @@ spec:
                   value: https://auth.konnektr.io/oauth/token
                 - name: Parameters__Authorization__Api__Audience
                   value: https://ktrlplane.konnektr.io
-                - name: Parameters__Authorization__Api__ClientId
+                - name: Parameters__Authorization__ApiProvider__ClientId
                   valueFrom:
                     secretKeyRef:
                       name: auth0-secret
                       key: clientId
-                - name: Parameters__Authorization__Api__ClientSecret
+                - name: Parameters__Authorization__ApiProvider__ClientSecret
                   valueFrom:
                     secretKeyRef:
                       name: auth0-secret
