@@ -79,6 +79,8 @@ spec:
               config:
                 authentication:
                   enabled: true
+                authorization:
+                  enabled: true
                 openApi:
                   enabled: true
                 parameters:
