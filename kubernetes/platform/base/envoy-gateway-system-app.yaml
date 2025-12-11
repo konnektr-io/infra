@@ -11,9 +11,6 @@ spec:
     targetRevision: 1.x
     helm:
       valuesObject:
-        service:
-          annotations:
-            cloud.google.com/load-balancer-ipv4-address: "gateway_external_ip"
         deployment:
           pod:
             nodeSelector:
