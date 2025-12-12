@@ -88,12 +88,12 @@ spec:
                   rateLimitingEnabled: true
                   {{- end }}
               extraEnv:
-                - name: Parameters__Authorization__ApiProvider__ClientId
+                - name: Authorization__ApiProvider__ClientId
                   valueFrom:
                     secretKeyRef:
                       name: auth0-secret
                       key: clientId
-                - name: Parameters__Authorization__ApiProvider__ClientSecret
+                - name: Authorization__ApiProvider__ClientSecret
                   valueFrom:
                     secretKeyRef:
                       name: auth0-secret
