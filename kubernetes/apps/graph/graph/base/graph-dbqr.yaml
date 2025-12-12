@@ -35,7 +35,7 @@ spec:
       source:
         repoURL: oci://ghcr.io/konnektr-io/charts/graph
         path: .
-        targetRevision: 0.4.11
+        targetRevision: 0.4.12
         helm:
           valuesObject:
             fullnameOverride: {{ .Row.resource_id | lower }}
@@ -81,6 +81,8 @@ spec:
                   enabled: true
                 authorization:
                   enabled: true
+                  apiProvider:
+                    resourceName: {{ .Row.resource_id | lower }}
                 openApi:
                   enabled: true
                 parameters:
