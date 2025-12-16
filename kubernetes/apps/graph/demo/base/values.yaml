@@ -1,0 +1,48 @@
+fullnameOverride: demo
+cluster:
+  enabled: true
+  fullnameOverride: demo
+  cluster:
+    instances: 1
+    logLevel: warning
+    resources:
+      requests:
+        memory: "500Mi"
+        cpu: "50m"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
+    enablePDB: false
+    affinity:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+api:
+  enabled: true
+  httproute:
+    enabled: true
+    gatewayName: external
+    gatewayNamespace: platform
+    host: demo.api.graph.konnektr.io
+  # Spot node configuration for API
+  nodeSelector:
+    cloud.google.com/gke-spot: "true"
+  terminationGracePeriodSeconds: 15
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 250Mi
+  logLevel: Information
+  config:
+    authentication:
+      enabled: false
+    authorization:
+      enabled: false
+    openApi:
+      enabled: true
+    parameters:
+      rateLimitingEnabled: true
+events:
+  enabled: false
