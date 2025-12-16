@@ -104,6 +104,18 @@ spec:
         certificateRefs:
           - kind: Secret
             name: graph-api-tls
+    - name: graph-mcp-https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.mcp.graph.konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: graph-mcp-tls
     - name: graph-https
       protocol: HTTPS
       port: 443
