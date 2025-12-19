@@ -22,7 +22,8 @@ api:
     enabled: true
     gatewayName: external
     gatewayNamespace: platform
-    host: demo.api.graph.konnektr.io
+    hosts: 
+     - demo.api.graph.konnektr.io
   # Spot node configuration for API
   nodeSelector:
     cloud.google.com/gke-spot: "true"
