@@ -69,9 +69,5 @@ mcp:
       enabled: false
     authorization:
       enabled: false
-    openApi:
-      enabled: true
-    parameters:
-      rateLimitingEnabled: true
 events:
   enabled: false

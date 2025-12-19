@@ -65,7 +65,6 @@ spec:
                 gatewayNamespace: platform
                 hosts: 
                  - {{ .Row.resource_id | lower }}.api.graph.konnektr.io
-              # Spot node configuration for API
               nodeSelector:
                 cloud.google.com/gke-spot: "true"
               terminationGracePeriodSeconds: 15
@@ -101,6 +100,35 @@ spec:
                     secretKeyRef:
                       name: auth0-secret
                       key: clientSecret
+
+            {{- if eq .Row.sku "standard" -}}
+            mcp:
+              enabled: true
+              httproute:
+                enabled: true
+                gatewayName: external
+                gatewayNamespace: platform
+                hosts: 
+                 - {{ .Row.resource_id | lower }}.mcp.graph.konnektr.io
+              nodeSelector:
+                cloud.google.com/gke-spot: "true"
+              terminationGracePeriodSeconds: 15
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 1Gi
+                requests:
+                  cpu: 50m
+                  memory: 250Mi
+              logLevel: Warning
+              config:
+                authentication:
+                  enabled: true
+                authorization:
+                  enabled: true
+                  apiProvider:
+                    resourceName: {{ .Row.resource_id | lower }}
+            {{- end }}
 
             events:
               enabled: false
