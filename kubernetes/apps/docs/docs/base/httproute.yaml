@@ -12,7 +12,6 @@ spec:
       namespace: platform
   hostnames:
     - docs.konnektr.io
-    - blog.konnektr.io
   rules:
     - matches:
         - path:
