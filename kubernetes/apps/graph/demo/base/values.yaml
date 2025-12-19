@@ -4,6 +4,7 @@ cluster:
   fullnameOverride: demo
   cluster:
     instances: 1
+    enablePDB: false
     logLevel: warning
     resources:
       requests:
@@ -12,7 +13,6 @@ cluster:
       limits:
         memory: "2Gi"
         cpu: "1"
-    enablePDB: false
     affinity:
       nodeSelector:
         cloud.google.com/gke-spot: "true"
