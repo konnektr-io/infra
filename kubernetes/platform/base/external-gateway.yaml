@@ -47,6 +47,18 @@ spec:
         certificateRefs:
           - kind: Secret
             name: docs-tls
+    - name: blog-https
+      protocol: HTTPS
+      port: 443
+      hostname: "blog.konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: blog-tls
     - name: dev-https
       protocol: HTTPS
       hostname: "*.dev.konnektr.io"
