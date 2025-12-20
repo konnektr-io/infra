@@ -89,6 +89,7 @@ spec:
                   {{- if eq .Row.sku "free" -}}
                   rateLimitingEnabled: true
                   {{- end }}
+
               extraEnv:
                 - name: Authorization__ApiProvider__ClientId
                   valueFrom:
@@ -101,7 +102,7 @@ spec:
                       name: auth0-secret
                       key: clientSecret
 
-            {{- if eq .Row.sku "standard" -}}
+            {{- if eq .Row.sku "standard" }}
             mcp:
               enabled: true
               httproute:
@@ -109,7 +110,7 @@ spec:
                 gatewayName: external
                 gatewayNamespace: platform
                 hosts: 
-                 - {{ .Row.resource_id | lower }}.mcp.graph.konnektr.io
+                  - {{ .Row.resource_id | lower }}.mcp.graph.konnektr.io
               nodeSelector:
                 cloud.google.com/gke-spot: "true"
               terminationGracePeriodSeconds: 15
