@@ -129,6 +129,18 @@ spec:
                   enabled: true
                   apiProvider:
                     resourceName: {{ .Row.resource_id | lower }}
+
+              extraEnv:
+                - name: Authorization__ApiProvider__ClientId
+                  valueFrom:
+                    secretKeyRef:
+                      name: auth0-secret
+                      key: clientId
+                - name: Authorization__ApiProvider__ClientSecret
+                  valueFrom:
+                    secretKeyRef:
+                      name: auth0-secret
+                      key: clientSecret
             {{- end }}
 
             events:
