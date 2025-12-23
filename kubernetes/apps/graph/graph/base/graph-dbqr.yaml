@@ -43,6 +43,9 @@ spec:
               enabled: true
               fullnameOverride: {{ .Row.resource_id | lower }}
               cluster:
+                {{- if eq .Row.sku "standard" }}
+                imageName: "ghcr.io/konnektr-io/age-pgvector-postgis:17-1.6.0-standard-trixie"
+                {{- end }}
                 instances: {{ eq .Row.sku "free" | ternary 1 2 }}
                 logLevel: warning
                 resources:
