@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         cloud.google.com/gke-spot: "true"
       containers:
-        - name: frontend
+        - name: csharp
           image: ghcr.io/konnektr-io/jexl-playground/backend-csharp:0.2.0
           ports:
             - containerPort: 8080
