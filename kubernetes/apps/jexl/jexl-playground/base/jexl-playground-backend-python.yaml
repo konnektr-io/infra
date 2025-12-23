@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jexl-playground-backend-python
+  labels:
+    app: jexl-playground-backend-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jexl-playground-backend-python
+  template:
+    metadata:
+      labels:
+        app: jexl-playground-backend-python
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      containers:
+        - name: backend
+          image: ghcr.io/konnektr-io/jexl-playground/backend-python:0.2.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KTRLPLANE_BASE_URL
+              value: "http://ktrlplane-backend-service.ktrlplane.svc.cluster.local:8080/api/v1"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jexl-playground-backend-python
+  labels:
+    app: jexl-playground-backend-python
+spec:
+  selector:
+    app: jexl-playground-backend-python
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

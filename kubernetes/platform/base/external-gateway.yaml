@@ -140,6 +140,18 @@ spec:
         certificateRefs:
           - kind: Secret
             name: graph-tls
+    - name: jexl-playground-https
+      protocol: HTTPS
+      port: 443
+      hostname: "playground.jexl.konnektr.io"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: jexl-playground-tls
     - name: n8n-https
       protocol: HTTPS
       port: 443

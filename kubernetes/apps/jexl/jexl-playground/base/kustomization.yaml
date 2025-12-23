@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - jexl-playground-backend-python.yaml
+  - jexl-playground-backend-csharp.yaml
+  - jexl-playground-httproute.yaml

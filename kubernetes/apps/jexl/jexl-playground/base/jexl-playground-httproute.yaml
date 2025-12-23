@@ -1,0 +1,27 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: jexl-playground
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external
+      namespace: platform
+  hostnames:
+    - playground.jexl.konnektr.io
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /evaluate-cs
+      backendRefs:
+        - name: jexl-playground-backend-csharp
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: graph-explorer-backend
+          port: 8080
