@@ -18,7 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: python
-          image: ghcr.io/konnektr-io/jexl-playground/backend-python:0.2.0
+          image: ghcr.io/konnektr-io/jexl-playground/backend-python:0.2.1
           ports:
             - containerPort: 8080
           env:
