@@ -3,7 +3,7 @@ cluster:
   enabled: true
   fullnameOverride: demo
   cluster:
-    imageName: "ghcr.io/konnektr-io/age-pgvector-postgis-timescale:17-1.6.0"
+    imageName: "ghcr.io/konnektr-io/age-pgvector:17-1.6.0"
     instances: 1
     enablePDB: false
     logLevel: warning
