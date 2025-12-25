@@ -12,7 +12,7 @@ spec:
   project: platform
   source:
     repoURL: oci://ghcr.io/konnektr-io/charts/db-query-operator
-    targetRevision: 0.8.x
+    targetRevision: 0.9.0
     path: .
     helm:
       valuesObject:
@@ -23,7 +23,7 @@ spec:
         resources: 
           requests:
             memory: "300Mi"
-            cpu: "20m"
+            cpu: "50m"
           limits:
             memory: "600Mi"
             cpu: "100m"
