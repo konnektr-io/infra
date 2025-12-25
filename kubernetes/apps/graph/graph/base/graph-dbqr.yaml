@@ -146,7 +146,8 @@ spec:
                       key: clientSecret
             {{- end }}
 
-            {{- if and (eq .Row.sku "standard") (gt (len (index .Row.settings_json "eventRoutes")) 0) }}
+            {{- $eventRoutes := index .Row.settings_json "eventRoutes" }}
+            {{- if and (eq .Row.sku "standard") $eventRoutes (gt (len $eventRoutes) 0) }}
             events:
               nodeSelector:
                 cloud.google.com/gke-spot: "true"
