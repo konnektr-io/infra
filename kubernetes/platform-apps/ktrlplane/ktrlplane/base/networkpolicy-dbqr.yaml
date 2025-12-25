@@ -1,0 +1,37 @@
+apiVersion: konnektr.io/v1alpha1
+kind: DatabaseQueryResource
+metadata:
+  name: networkpolicy-dbqr
+spec:
+  # How often to query the database and reconcile
+  pollInterval: "30m"
+  database:
+    type: postgres
+    connectionSecretRef:
+      name: ktrlplane-app
+      uriKey: uri
+  # The SQL query to execute
+  query: "SELECT project_id, org_id FROM ktrlplane.projects;"
+  # Go template for the Kubernetes resource(s)
+  template: |
+    apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: deny-egress-other-namespaces
+      namespace: {{ .Row.project_id | lower }}
+    spec:
+      podSelector: {}
+      policyTypes:
+        - Egress
+      egress:
+        # Allow egress only to same namespace and external IPs (DNS, Internet)
+        - to:
+            - podSelector: {}
+        - to:
+            - ipBlock:
+                cidr: 0.0.0.0/0
+          ports:
+            - protocol: UDP
+              port: 53
+            - protocol: TCP
+              port: 53
