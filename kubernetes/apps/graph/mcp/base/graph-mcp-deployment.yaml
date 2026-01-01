@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graph-mcp
+  labels:
+    app: graph-mcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graph-mcp
+  template:
+    metadata:
+      labels:
+        app: graph-mcp
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      containers:
+        - name: backend
+          image: ghcr.io/konnektr-io/graph-mcp:0.0.3
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AUTH0_DOMAIN
+              value: "auth.konnektr.io"
+            - name: AUTH0_AUDIENCE
+              value: "https://graph.konnektr.io"
+            - name: AUTH0_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-credentials
+                  key: clientId
+            - name: AUTH0_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-credentials
+                  key: clientSecret
+            - name: AUTH_ENABLED
+              value: "true"
+            - name: API_BASE_URL_TEMPLATE
+              value: "https://{resource_id}.api.graph.konnektr.io"
+            - name: API_TIMEOUT_SECONDS
+              value: "30"
+            - name: MCP_RESOURCE_URL
+              value: "https://mcp.graph.konnektr.io"
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
