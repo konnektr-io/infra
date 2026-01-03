@@ -103,45 +103,6 @@ spec:
                   rateLimitingEnabled: true
                   {{- end }}
 
-            {{- if eq .Row.sku "standard" }}
-            mcp:
-              enabled: true
-              httproute:
-                enabled: true
-                gatewayName: external
-                gatewayNamespace: platform
-                hosts: 
-                  - {{ .Row.resource_id | lower }}.mcp.graph.konnektr.io
-              nodeSelector:
-                cloud.google.com/gke-spot: "true"
-              terminationGracePeriodSeconds: 15
-              resources:
-                limits:
-                  cpu: "1"
-                  memory: 1Gi
-                requests:
-                  cpu: 50m
-                  memory: 250Mi
-              logLevel: Warning
-              config:
-                authentication:
-                  enabled: true
-                authorization:
-                  enabled: true
-                  apiProvider:
-                    resourceName: {{ .Row.resource_id | lower }}
-                    clientId:
-                      valueFrom:
-                        secretKeyRef:
-                          name: auth0-secret
-                          key: clientId
-                    clientSecret:
-                      valueFrom:
-                        secretKeyRef:
-                          name: auth0-secret
-                          key: clientSecret
-            {{- end }}
-
             {{- $eventRoutes := index .Row.settings_json "eventRoutes" }}
             {{- if and (eq .Row.sku "standard") $eventRoutes (gt (len $eventRoutes) 0) }}
             events:
