@@ -18,7 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: backend
-          image: ghcr.io/konnektr-io/graph-mcp:0.0.22
+          image: ghcr.io/konnektr-io/graph-mcp:0.0.23
           ports:
             - containerPort: 8080
           volumeMounts:
