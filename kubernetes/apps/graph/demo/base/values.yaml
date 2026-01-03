@@ -47,28 +47,6 @@ api:
     parameters:
       rateLimitingEnabled: true
 mcp:
-  enabled: true
-  httproute:
-    enabled: true
-    gatewayName: external
-    gatewayNamespace: platform
-    host: demo.mcp.graph.konnektr.io
-  # Spot node configuration for MCP
-  nodeSelector:
-    cloud.google.com/gke-spot: "true"
-  terminationGracePeriodSeconds: 15
-  resources:
-    limits:
-      cpu: "1"
-      memory: 1Gi
-    requests:
-      cpu: 50m
-      memory: 250Mi
-  logLevel: Information
-  config:
-    authentication:
-      enabled: false
-    authorization:
-      enabled: false
+  enabled: false
 events:
   enabled: false
