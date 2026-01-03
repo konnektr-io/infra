@@ -6,3 +6,4 @@ resources:
   - graph-mcp-service.yaml
   - graph-mcp-httproute.yaml
   - auth0-external-secret.yaml
+  - graph-mcp-oauth-pvc.yaml

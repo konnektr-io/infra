@@ -21,6 +21,9 @@ spec:
           image: ghcr.io/konnektr-io/graph-mcp:0.0.16
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: oauth-storage
+              mountPath: /var/lib/fastmcp/oauth
           env:
             - name: AUTH0_DOMAIN
               value: "auth.konnektr.io"
@@ -65,3 +68,7 @@ spec:
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 20
+      volumes:
+        - name: oauth-storage
+          persistentVolumeClaim:
+            claimName: graph-mcp-oauth-pvc
