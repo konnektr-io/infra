@@ -18,7 +18,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       containers:
         - name: home
-          image: ghcr.io/konnektr-io/home:0.3.4
+          image: ghcr.io/konnektr-io/home:0.3.5
           ports:
             - containerPort: 8080
           env:
