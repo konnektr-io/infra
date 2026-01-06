@@ -75,7 +75,7 @@ spec:
             - --source=gateway-tlsroute
             - --source=gateway-tcproute
             - --source=gateway-udproute
-            - --log-level=debug
+            - --log-level=warning
             - --domain-filter=konnektr.io
             - --provider=webhook
             - --txt-owner-id=konnektr-gke
@@ -98,7 +98,7 @@ spec:
               cpu: "200m"
           env:
             - name: GO_LOG
-              value: debug
+              value: warning
             - name: DOMAIN_FILTER
               value: konnektr.io
             - name: API_KEY
