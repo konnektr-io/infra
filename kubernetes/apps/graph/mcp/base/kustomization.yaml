@@ -7,3 +7,4 @@ resources:
   - graph-mcp-httproute.yaml
   - auth0-external-secret.yaml
   - graph-mcp-oauth-pvc.yaml
+  - mcp-vertexai-external-secret.yaml

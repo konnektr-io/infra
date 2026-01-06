@@ -49,6 +49,17 @@ spec:
               value: "https://mcp.graph.konnektr.io"
             - name: PYTHONUNBUFFERED
               value: "1"
+            - name: GOOGLE_GENAI_USE_VERTEXAI
+              value: "true"
+            - name: GOOGLE_CLOUD_PROJECT
+              value: konnektr
+            - name: GOOGLE_CLOUD_LOCATION
+              value: europe-west1
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mcp-vertexai
+                  key: apikey
           resources:
             requests:
               cpu: 10m
