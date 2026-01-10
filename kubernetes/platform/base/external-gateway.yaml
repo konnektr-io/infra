@@ -7,6 +7,11 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-dns"
 spec:
   gatewayClassName: eg
+  infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: external-proxy-config
   listeners:
     - name: http
       port: 80

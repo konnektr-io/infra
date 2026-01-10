@@ -10,8 +10,10 @@ resources:
   - cert-manager-app.yaml
   - cert-manager-porkbun-webhook-app.yaml
   - cert-issuers.yaml
+  - postgres-gateway-certificate.yaml
 
   - envoy-gateway-system-app.yaml
+  - external-gateway-envoyproxy.yaml
   - external-gateway.yaml
   
   - dbqo-system-app.yaml
