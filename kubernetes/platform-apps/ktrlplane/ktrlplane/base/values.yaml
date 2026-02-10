@@ -20,11 +20,25 @@ httproute:
 frontend:
   nodeSelector:
     cloud.google.com/gke-spot: "true"
-    
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 100Mi
+
 backend:
   nodeSelector:
     cloud.google.com/gke-spot: "true"
-  
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 100Mi
+
 stripe:
   enabled: true
   useExternalSecret: true
