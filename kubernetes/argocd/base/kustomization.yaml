@@ -93,3 +93,4 @@ patches:
           requests:
             cpu: "250m"
             memory: "500Mi"
+  - path: disable-notifications.yaml
