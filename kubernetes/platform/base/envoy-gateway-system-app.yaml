@@ -57,4 +57,3 @@ spec:
         pod:
           nodeSelector:
             cloud.google.com/gke-spot: "true"
-          terminationGracePeriodSeconds: 25
