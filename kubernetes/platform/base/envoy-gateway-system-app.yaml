@@ -54,6 +54,7 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyDeployment:
-        nodeSelector:
-          cloud.google.com/gke-spot: "true"
-        terminationGracePeriodSeconds: 25
+        pod:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 25
