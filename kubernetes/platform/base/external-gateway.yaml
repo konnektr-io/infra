@@ -184,11 +184,11 @@ metadata:
   namespace: platform
 spec:
   parentRefs:
-  - name: external
-    sectionName: http
+    - name: external
+      sectionName: http
   rules:
-  - filters:
-    - type: RequestRedirect
-      requestRedirect:
-        scheme: https
-        port: 443
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            port: 443

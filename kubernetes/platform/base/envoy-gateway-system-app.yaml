@@ -41,3 +41,19 @@ metadata:
   namespace: envoy-gateway-system
 spec:
   controllerName: gateway.envoyproxy.io/gatewayclass-controller
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: external-http-proxy
+  namespace: envoy-gateway-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        nodeSelector:
+          cloud.google.com/gke-spot: "true"
+        terminationGracePeriodSeconds: 25
